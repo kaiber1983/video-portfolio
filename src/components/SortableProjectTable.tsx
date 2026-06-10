@@ -127,7 +127,7 @@ export default function SortableProjectTable({ projects: initialProjects }: Prop
               <th className="w-12 px-2 py-3 text-center text-xs text-[#555] font-normal">
                 排序
               </th>
-              <th className="text-left px-4 py-3 font-medium">ID</th>
+              <th className="text-left px-4 py-3 font-medium w-14">#</th>
               <th className="text-left px-4 py-3 font-medium">标题</th>
               <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
                 平台
@@ -140,7 +140,7 @@ export default function SortableProjectTable({ projects: initialProjects }: Prop
             </tr>
           </thead>
           <tbody onDragOver={(e) => e.preventDefault()} onDrop={handleDrop}>
-            {projects.map((p) => (
+            {projects.map((p, i) => (
               <tr
                 key={p.id}
                 draggable
@@ -167,7 +167,7 @@ export default function SortableProjectTable({ projects: initialProjects }: Prop
                     <circle cx="10" cy="13" r="1.5" fill="#666" />
                   </svg>
                 </td>
-                <td className="px-4 py-3 text-[#a0a0a0]">{p.id}</td>
+                <td className="px-4 py-3 text-[#555] font-mono text-xs">{i + 1}</td>
                 <td className="px-4 py-3 font-medium">{p.title}</td>
                 <td className="px-4 py-3 text-[#a0a0a0] hidden md:table-cell">
                   {p.platform === "youtube" ? "YouTube" : "Bilibili"}
