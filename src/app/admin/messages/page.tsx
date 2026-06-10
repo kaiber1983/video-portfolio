@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { readMessages } from "@/lib/data";
+import { readMessagesRemote } from "@/lib/data";
 import MarkReadButton from "./MarkReadButton";
 
 export const dynamic = "force-dynamic";
 
 export default async function MessagesPage() {
-  const messages = readMessages().sort(
+  const messages = (await readMessagesRemote()).sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 

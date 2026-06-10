@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { readAbout } from "@/lib/data";
+import { readAboutRemote } from "@/lib/data";
 import AboutForm from "./AboutForm";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminAboutPage() {
-  const about = readAbout();
+  const about = await readAboutRemote();
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">

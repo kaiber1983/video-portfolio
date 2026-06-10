@@ -35,7 +35,22 @@ export interface ContactMessage {
   createdAt: string;
 }
 
-// ============ 通用工具 ============
+// ============ 数据后端选择 ============
+
+// Vercel 生产环境使用 KV 存储，本地开发使用 JSON 文件
+let kv: typeof import("@vercel/kv").kv | null = null;
+
+async function getKv() {
+  if (kv) return kv;
+  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
+    const mod = await import("@vercel/kv");
+    kv = mod.kv;
+    return kv;
+  }
+  return null;
+}
+
+// ============ JSON 文件后端（本地开发） ============
 
 function readJson<T>(filename: string): T[] {
   const filePath = path.join(process.cwd(), "data", filename);
@@ -58,14 +73,37 @@ function getNextId<T extends { id: number }>(items: T[]): number {
 
 // ============ 作品数据 ============
 
-const PROJECTS_FILE = "projects.json";
+const PROJECTS_KEY = "projects";
 
 export function readProjects(): Project[] {
-  return readJson<Project>(PROJECTS_FILE);
+  return readJson<Project>("projects.json");
 }
 
+export async function readProjectsRemote(): Promise<Project[]> {
+  const client = await getKv();
+  if (!client) return readProjects();
+  const data = await client.get<string>(PROJECTS_KEY);
+  if (!data) return readProjects();
+  try {
+    return JSON.parse(data) as Project[];
+  } catch {
+    return readProjects();
+  }
+}
+
+// 首页使用这个异步版本
+export { readProjectsRemote as readProjectsAsync };
+
 export function writeProjects(projects: Project[]): void {
-  writeJson(PROJECTS_FILE, projects);
+  writeJson("projects.json", projects);
+}
+
+export async function writeProjectsRemote(projects: Project[]): Promise<void> {
+  writeProjects(projects);
+  const client = await getKv();
+  if (client) {
+    await client.set(PROJECTS_KEY, JSON.stringify(projects));
+  }
 }
 
 export function getNextProjectId(projects: Project[]): number {
@@ -74,27 +112,67 @@ export function getNextProjectId(projects: Project[]): number {
 
 // ============ 关于我数据 ============
 
-const ABOUT_FILE = "about.json";
+const ABOUT_KEY = "about";
 
 export function readAbout(): About | null {
-  const list = readJson<About>(ABOUT_FILE);
+  const list = readJson<About>("about.json");
   return list.length > 0 ? list[0] : null;
 }
 
+export async function readAboutRemote(): Promise<About | null> {
+  const client = await getKv();
+  if (!client) return readAbout();
+  const data = await client.get<string>(ABOUT_KEY);
+  if (!data) return readAbout();
+  try {
+    return JSON.parse(data) as About;
+  } catch {
+    return readAbout();
+  }
+}
+
 export function writeAbout(about: About): void {
-  writeJson(ABOUT_FILE, [about]);
+  writeJson("about.json", [about]);
+}
+
+export async function writeAboutRemote(about: About): Promise<void> {
+  writeAbout(about);
+  const client = await getKv();
+  if (client) {
+    await client.set(ABOUT_KEY, JSON.stringify(about));
+  }
 }
 
 // ============ 留言数据 ============
 
-const MESSAGES_FILE = "messages.json";
+const MESSAGES_KEY = "messages";
 
 export function readMessages(): ContactMessage[] {
-  return readJson<ContactMessage>(MESSAGES_FILE);
+  return readJson<ContactMessage>("messages.json");
+}
+
+export async function readMessagesRemote(): Promise<ContactMessage[]> {
+  const client = await getKv();
+  if (!client) return readMessages();
+  const data = await client.get<string>(MESSAGES_KEY);
+  if (!data) return readMessages();
+  try {
+    return JSON.parse(data) as ContactMessage[];
+  } catch {
+    return readMessages();
+  }
 }
 
 export function writeMessages(messages: ContactMessage[]): void {
-  writeJson(MESSAGES_FILE, messages);
+  writeJson("messages.json", messages);
+}
+
+export async function writeMessagesRemote(messages: ContactMessage[]): Promise<void> {
+  writeMessages(messages);
+  const client = await getKv();
+  if (client) {
+    await client.set(MESSAGES_KEY, JSON.stringify(messages));
+  }
 }
 
 export function getNextMessageId(messages: ContactMessage[]): number {

@@ -44,3 +44,5 @@ data/messages.json
 next-env.d.ts
 
 /src/generated/prisma
+
+.vercel

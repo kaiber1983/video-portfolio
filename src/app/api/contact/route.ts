@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readMessages, writeMessages, getNextMessageId } from "@/lib/data";
+import { readMessagesRemote, writeMessagesRemote, getNextMessageId } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const messages = readMessages();
+    const messages = await readMessagesRemote();
     const newMessage = {
       id: getNextMessageId(messages),
       name: body.name,
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     };
 
     messages.push(newMessage);
-    writeMessages(messages);
+    await writeMessagesRemote(messages);
 
     return NextResponse.json(
       { success: true, id: newMessage.id },

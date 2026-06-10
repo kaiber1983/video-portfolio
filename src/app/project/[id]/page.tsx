@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { readProjects } from "@/lib/data";
+import { readProjectsRemote } from "@/lib/data";
 import BackButton from "@/components/BackButton";
 import VideoEmbed from "@/components/VideoEmbed";
 
@@ -11,7 +11,7 @@ interface ProjectPageProps {
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const projects = readProjects();
+  const projects = await readProjectsRemote();
   const project = projects.find((p) => p.id === parseInt(params.id));
   if (!project) return { title: "作品未找到" };
   return {
@@ -21,7 +21,7 @@ export async function generateMetadata({
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const projects = readProjects();
+  const projects = await readProjectsRemote();
   const project = projects.find((p) => p.id === parseInt(params.id));
 
   if (!project) {

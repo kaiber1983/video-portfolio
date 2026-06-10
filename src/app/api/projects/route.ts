@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { readProjects, writeProjects, getNextProjectId } from "@/lib/data";
+import { readProjectsRemote, writeProjectsRemote, getNextProjectId } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
 /** 获取所有作品 */
 export async function GET() {
-  const projects = readProjects();
+  const projects = await readProjectsRemote();
   return NextResponse.json(projects);
 }
 
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const projects = readProjects();
+  const projects = await readProjectsRemote();
   const newProject = {
     id: getNextProjectId(projects),
     title,
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   };
 
   projects.push(newProject);
-  writeProjects(projects);
+  await writeProjectsRemote(projects);
 
   return NextResponse.json(newProject, { status: 201 });
 }

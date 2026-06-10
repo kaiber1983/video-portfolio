@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readMessages, writeMessages } from "@/lib/data";
+import { readMessagesRemote, writeMessagesRemote } from "@/lib/data";
 
 // PUT /api/contact/:id — 更新留言状态（标为已读/未读）
 export async function PUT(
@@ -8,7 +8,7 @@ export async function PUT(
 ) {
   try {
     const body = await req.json();
-    const messages = readMessages();
+    const messages = await readMessagesRemote();
     const index = messages.findIndex((m) => m.id === parseInt(params.id));
 
     if (index === -1) {
@@ -16,7 +16,7 @@ export async function PUT(
     }
 
     messages[index].read = body.read;
-    writeMessages(messages);
+    await writeMessagesRemote(messages);
 
     return NextResponse.json(messages[index]);
   } catch {

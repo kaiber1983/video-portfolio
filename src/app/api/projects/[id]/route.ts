@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { readProjects, writeProjects } from "@/lib/data";
+import { readProjectsRemote, writeProjectsRemote } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +9,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const id = parseInt(params.id);
-  const projects = readProjects();
+  const projects = await readProjectsRemote();
   const project = projects.find((p) => p.id === id);
 
   if (!project) {
@@ -26,7 +26,7 @@ export async function PUT(
 ) {
   const id = parseInt(params.id);
   const body = await request.json();
-  const projects = readProjects();
+  const projects = await readProjectsRemote();
   const index = projects.findIndex((p) => p.id === id);
 
   if (index === -1) {
@@ -39,7 +39,7 @@ export async function PUT(
     id, // 防止 ID 被修改
   };
 
-  writeProjects(projects);
+  await writeProjectsRemote(projects);
 
   return NextResponse.json(projects[index]);
 }
@@ -50,7 +50,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const id = parseInt(params.id);
-  const projects = readProjects();
+  const projects = await readProjectsRemote();
   const index = projects.findIndex((p) => p.id === id);
 
   if (index === -1) {
@@ -58,7 +58,7 @@ export async function DELETE(
   }
 
   projects.splice(index, 1);
-  writeProjects(projects);
+  await writeProjectsRemote(projects);
 
   return NextResponse.json({ success: true });
 }

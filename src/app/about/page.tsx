@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { readAbout } from "@/lib/data";
+import { readAboutRemote } from "@/lib/data";
 import type { Metadata } from "next";
 import FadeIn from "@/components/FadeIn";
 
@@ -37,7 +37,7 @@ const socialNames: Record<string, string> = {
 export default async function AboutPage() {
   let about = null;
   try {
-    about = readAbout();
+    about = await readAboutRemote();
   } catch {
     console.warn("数据读取失败，显示空状态");
   }
