@@ -45,12 +45,12 @@
   },
   {
     "id": 5,
-    "title": "延时摄影合集",
-    "description": "收集了过去一年的延时摄影作品，从日出到星空，展现自然之美。",
-    "thumbnail": "https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?w=800",
-    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "platform": "youtube",
-    "tags": "延时摄影,自然,合集",
+    "title": "AI创意广告：奥迪",
+    "description": "AI创意广告：奥迪",
+    "thumbnail": "https://raw.githubusercontent.com/kaiber1983/video-portfolio/master/public/images/1781080466336-klsu4e.png",
+    "videoUrl": "https://www.bilibili.com/video/BV15W6VYKEiG/?spm_id_from=333.1387.homepage.video_card.click&vd_source=200e4c695cb34560325d7b17ced91d02",
+    "platform": "bilibili",
+    "tags": "AI创意广告",
     "featured": true,
     "createdAt": "2025-06-20T00:00:00.000Z"
   }
