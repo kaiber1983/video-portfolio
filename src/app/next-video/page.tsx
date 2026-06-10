@@ -348,7 +348,7 @@ export default function NextVideoPage() {
               }}
             >
               <MagneticButton
-                href="/"
+                href="/contact"
                 strength={0.5}
                 className="inline-block px-10 py-4 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-body font-semibold text-base hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-shadow duration-300"
               >
@@ -357,10 +357,10 @@ export default function NextVideoPage() {
 
               <div className="mt-8">
                 <Link
-                  href="/"
+                  href="/about"
                   className="text-sm text-neutral-500 hover:text-accent-purple transition-colors duration-300 font-body underline underline-offset-4"
                 >
-                  View all projects
+                  About me
                 </Link>
               </div>
             </motion.div>
