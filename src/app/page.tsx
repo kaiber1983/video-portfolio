@@ -14,45 +14,50 @@ interface HomePageProps {
 export default async function HomePage({ searchParams }: HomePageProps) {
   const activeTag = searchParams.tag || "";
 
-  // 提取所有唯一标签
-  const tagResult = await prisma.project.findMany({
-    select: { tags: true },
-  });
-  const uniqueTags = Array.from(
-    new Set(tagResult.flatMap((p) => p.tags.split(",").filter(Boolean)))
-  ).sort();
+  // 安全读取数据库，Vercel 上无 SQLite 时返回空数据
+  async function loadProjects() {
+    if (!prisma) return { tags: [] as string[], featured: [], others: [], total: 0 };
+    try {
+      const tagResult = await prisma.project.findMany({
+        select: { tags: true },
+      });
+      const uniqueTags = Array.from(
+        new Set(tagResult.flatMap((p) => p.tags.split(",").filter(Boolean)))
+      ).sort();
+
+      if (activeTag) {
+        const filtered = await prisma.project.findMany({
+          orderBy: { createdAt: "desc" },
+          where: { tags: { contains: activeTag } },
+        });
+        return { tags: uniqueTags, featured: [], others: filtered, total: filtered.length, isFiltered: true };
+      }
+
+      const [featured, others] = await Promise.all([
+        prisma.project.findMany({ where: { featured: true }, orderBy: { createdAt: "desc" } }),
+        prisma.project.findMany({ where: { featured: false }, orderBy: { createdAt: "desc" } }),
+      ]);
+      return { tags: uniqueTags, featured, others, total: featured.length + others.length, isFiltered: false };
+    } catch {
+      console.warn("数据库查询失败，降级为空数据");
+      return { tags: [] as string[], featured: [], others: [], total: 0, isFiltered: false };
+    }
+  }
+
+  const { tags: uniqueTags, featured: featuredProjects, others: otherProjects, total: totalCount } = await loadProjects();
 
   // 有标签筛选时：只展示筛选结果
   if (activeTag) {
-    const projects = await prisma.project.findMany({
-      orderBy: { createdAt: "desc" },
-      where: { tags: { contains: activeTag } },
-    });
-
     return (
       <>
         <Hero title="筛选" subtitle={`标签: ${activeTag}`} compact />
         <div className="max-w-6xl mx-auto px-4 pb-20">
           <TagFilter tags={uniqueTags} />
-          <ProjectGrid projects={projects} />
+          <ProjectGrid projects={otherProjects} />
         </div>
       </>
     );
   }
-
-  // 无筛选时：展示精选 + 全部
-  const [featuredProjects, otherProjects] = await Promise.all([
-    prisma.project.findMany({
-      where: { featured: true },
-      orderBy: { createdAt: "desc" },
-    }),
-    prisma.project.findMany({
-      where: { featured: false },
-      orderBy: { createdAt: "desc" },
-    }),
-  ]);
-
-  const totalCount = featuredProjects.length + otherProjects.length;
 
   return (
     <>
