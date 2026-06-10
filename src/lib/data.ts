@@ -150,9 +150,10 @@ export function writeProjects(projects: Project[]): void {
 }
 
 export async function writeProjectsRemote(projects: Project[], message?: string): Promise<void> {
-  writeProjects(projects);
   if (hasGithubToken()) {
     await writeJsonToGitHub("projects.json", projects, message || "更新作品数据");
+  } else {
+    writeProjects(projects);
   }
 }
 
@@ -183,9 +184,10 @@ export function writeAbout(about: About): void {
 }
 
 export async function writeAboutRemote(about: About): Promise<void> {
-  writeAbout(about);
   if (hasGithubToken()) {
     await writeJsonToGitHub("about.json", [about], "更新关于我信息");
+  } else {
+    writeAbout(about);
   }
 }
 
@@ -210,9 +212,10 @@ export function writeMessages(messages: ContactMessage[]): void {
 }
 
 export async function writeMessagesRemote(messages: ContactMessage[]): Promise<void> {
-  writeMessages(messages);
   if (hasGithubToken()) {
     await writeJsonToGitHub("messages.json", messages, "更新留言数据");
+  } else {
+    writeMessages(messages);
   }
 }
 
