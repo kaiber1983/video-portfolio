@@ -124,7 +124,9 @@ export default function SortableProjectTable({ projects: initialProjects }: Prop
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-[#2a2a2a] text-[#a0a0a0]">
-              <th className="w-10 px-2 py-3" />
+              <th className="w-12 px-2 py-3 text-center text-xs text-[#555] font-normal">
+                排序
+              </th>
               <th className="text-left px-4 py-3 font-medium">ID</th>
               <th className="text-left px-4 py-3 font-medium">标题</th>
               <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
@@ -149,8 +151,21 @@ export default function SortableProjectTable({ projects: initialProjects }: Prop
                   dragId === p.id ? "" : "cursor-grab"
                 }`}
               >
-                <td className="px-2 py-3 text-center text-[#555] cursor-grab active:cursor-grabbing select-none">
-                  ⠿
+                <td className="px-2 py-3 text-center cursor-grab active:cursor-grabbing select-none">
+                  <svg
+                    className="mx-auto"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                  >
+                    <circle cx="6" cy="3" r="1.5" fill="#666" />
+                    <circle cx="10" cy="3" r="1.5" fill="#666" />
+                    <circle cx="6" cy="8" r="1.5" fill="#666" />
+                    <circle cx="10" cy="8" r="1.5" fill="#666" />
+                    <circle cx="6" cy="13" r="1.5" fill="#666" />
+                    <circle cx="10" cy="13" r="1.5" fill="#666" />
+                  </svg>
                 </td>
                 <td className="px-4 py-3 text-[#a0a0a0]">{p.id}</td>
                 <td className="px-4 py-3 font-medium">{p.title}</td>
