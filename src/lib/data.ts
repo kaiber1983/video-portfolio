@@ -63,26 +63,18 @@ function hasGithubToken(): boolean {
   return !!process.env.GITHUB_TOKEN;
 }
 
-// 从 GitHub 读取 JSON 文件
+// 从 GitHub 读取 JSON 文件（用 raw URL 直接读文件内容，绕过 API 缓存延迟）
 async function readJsonFromGithub<T>(filename: string): Promise<T[]> {
-  // 加时间戳绕过 GitHub CDN 缓存，确保读到最新提交
-  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data/${filename}?ref=${BRANCH}&t=${Date.now()}`;
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      Accept: "application/vnd.github.v3+json",
-    },
-    cache: "no-store",
-  });
+  const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/data/${filename}?t=${Date.now()}`;
+  const res = await fetch(url, { cache: "no-store" });
 
   if (!res.ok) {
     if (res.status === 404) return [];
     throw new Error(`GitHub 读取失败: ${res.status}`);
   }
 
-  const data = await res.json();
-  const content = Buffer.from(data.content, "base64").toString("utf-8");
-  return JSON.parse(content) as T[];
+  const text = await res.text();
+  return JSON.parse(text) as T[];
 }
 
 // 写入 JSON 文件到 GitHub

@@ -159,8 +159,8 @@ export default function AdminProjectForm({
         throw new Error(saveResult.error || "保存失败");
       }
 
-      // 用硬导航代替 push+refresh，避免竞态导致读到缓存内容
-      window.location.href = "/admin";
+      // 硬导航 + 时间戳参数，绕过浏览器缓存强制重新加载
+      window.location.href = `/admin?t=${Date.now()}`;
     } catch (err) {
       setError(err instanceof Error ? err.message : "保存失败");
     } finally {
