@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface ProjectFormData {
@@ -66,7 +65,6 @@ export default function AdminProjectForm({
   initialData,
   projectId,
 }: AdminProjectFormProps) {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -161,8 +159,8 @@ export default function AdminProjectForm({
         throw new Error(saveResult.error || "保存失败");
       }
 
-      router.push("/admin");
-      router.refresh();
+      // 用硬导航代替 push+refresh，避免竞态导致读到缓存内容
+      window.location.href = "/admin";
     } catch (err) {
       setError(err instanceof Error ? err.message : "保存失败");
     } finally {
