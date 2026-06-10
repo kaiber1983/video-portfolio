@@ -4,59 +4,84 @@ import type { Project } from "@/lib/data";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const shortDesc =
-    project.description.length > 80
-      ? project.description.slice(0, 80) + "..."
+    project.description.length > 100
+      ? project.description.slice(0, 100) + "..."
       : project.description;
+
+  const tags = project.tags
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
 
   return (
     <Link
       href={`/project/${project.id}`}
-      className="group block rounded-xl overflow-hidden border border-white/[0.06] bg-surface-card transition-all duration-500 hover:shadow-[0_8px_30px_-8px_rgba(99,102,241,0.15)] hover:border-accent-indigo/20 card-border"
+      className="group block rounded-2xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e] transition-all duration-500 hover:border-white/[0.1] hover:shadow-[0_20px_60px_-16px_rgba(212,139,166,0.12)]"
     >
       {/* 缩略图 */}
-      <div className="aspect-video overflow-hidden bg-surface-muted relative glow-reveal">
+      <div className="aspect-[16/10] overflow-hidden relative bg-[#0a0a0b]">
+        {/* 精选角标 */}
         {project.featured && (
-          <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded text-[10px] font-medium tracking-[0.15em] uppercase border border-accent-indigo/30 bg-accent-dim text-accent-indigo shadow-lg backdrop-blur-sm">
+          <span className="absolute top-4 left-4 z-10 px-3 py-1 rounded-md text-[10px] font-medium tracking-[0.2em] uppercase bg-accent/20 text-accent-purple/90 backdrop-blur-sm border border-accent/10">
             精选
           </span>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent z-[1] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* 平台角标 */}
+        <span className="absolute top-4 right-4 z-10 px-2.5 py-1 rounded-md text-[10px] font-medium tracking-wider uppercase bg-black/40 text-white/60 backdrop-blur-sm border border-white/[0.06]">
+          {project.platform === "youtube" ? "YouTube" : "Bilibili"}
+        </span>
+
+        {/* 悬停渐变遮罩 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]" />
 
         <Image
           src={project.thumbnail}
           alt={project.title}
-          width={800}
-          height={450}
-          className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.03]"
+          width={960}
+          height={600}
+          className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.04]"
         />
 
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-accent-indigo/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1.5s] ease-in-out" />
+        {/* 光泽扫过效果 */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-[2]">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(105deg, transparent 40%, rgba(236,168,214,0.06) 45%, rgba(212,139,166,0.08) 50%, rgba(236,168,214,0.06) 55%, transparent 60%)",
+              transform: "translateX(-100%)",
+              transition: "transform 0.8s ease-out",
+            }}
+          />
         </div>
       </div>
 
-      {/* 信息区 */}
-      <div className="p-5 space-y-3">
-        <h3 className="font-display text-lg text-ink group-hover:text-accent-indigo transition-colors duration-300 tracking-wide">
+      {/* 内容区 */}
+      <div className="p-6 space-y-4">
+        <h3 className="text-xl font-display text-ink group-hover:text-accent-purple/90 transition-colors duration-300 tracking-wide leading-snug">
           {project.title}
         </h3>
 
-        <p className="text-sm text-ink-muted leading-relaxed line-clamp-2 font-light">
-          {shortDesc}
-        </p>
+        {project.description && (
+          <p className="text-sm text-ink-muted/70 leading-relaxed line-clamp-2 font-light">
+            {shortDesc}
+          </p>
+        )}
 
         {/* 标签 */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
-          {project.tags.split(",").map((tag) => (
-            <span
-              key={tag}
-              className="text-[10px] px-2 py-0.5 rounded-full border border-white/[0.08] bg-surface-muted text-ink-dim tracking-wider uppercase"
-            >
-              {tag.trim()}
-            </span>
-          ))}
-        </div>
+        {tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-1">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[11px] px-3 py-1 rounded-md bg-white/[0.03] text-ink-dim/60 tracking-wide border border-white/[0.04]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );
