@@ -11,11 +11,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "请选择图片" }, { status: 400 });
     }
 
-    // 限制 5MB
-    if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: "图片不能超过 5MB" }, { status: 400 });
-    }
-
     // 服务端检查文件魔数（magic bytes），防止伪造 MIME 类型
     const buffer = Buffer.from(await file.arrayBuffer());
     const mime = detectImageMime(buffer);

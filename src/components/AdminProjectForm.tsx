@@ -190,7 +190,7 @@ export default function AdminProjectForm({
           >
             {uploading ? "上传中..." : "选择本地图片"}
           </button>
-          <span className="text-xs text-[#666]">支持 JPG/PNG/WebP，最大 5MB</span>
+          <span className="text-xs text-[#666]">支持 JPG/PNG/WebP/GIF，无尺寸限制</span>
         </div>
         <input
           ref={fileInputRef}
