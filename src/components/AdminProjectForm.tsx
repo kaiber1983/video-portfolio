@@ -155,7 +155,7 @@ export default function AdminProjectForm({
       );
 
       if (!res.ok) {
-        const err = await res.json();
+        const err = await safeJson(res);
         throw new Error(err.error || "保存失败");
       }
 

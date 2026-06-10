@@ -29,8 +29,10 @@ export default function ContactPage() {
       });
 
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "发送失败");
+        const text = await res.text();
+        let msg = "发送失败";
+        try { msg = JSON.parse(text).error || msg; } catch {}
+        throw new Error(msg);
       }
 
       setStatus("success");
