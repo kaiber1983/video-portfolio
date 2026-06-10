@@ -3,7 +3,6 @@ import path from "path";
 
 // ============ 类型定义 ============
 
-/** 作品数据类型 */
 export interface Project {
   id: number;
   title: string;
@@ -16,7 +15,6 @@ export interface Project {
   createdAt: string;
 }
 
-/** 关于我数据类型 */
 export interface About {
   id: number;
   name: string;
@@ -25,7 +23,6 @@ export interface About {
   socialJson: string;
 }
 
-/** 留言数据类型 */
 export interface ContactMessage {
   id: number;
   name: string;
@@ -33,21 +30,6 @@ export interface ContactMessage {
   message: string;
   read: boolean;
   createdAt: string;
-}
-
-// ============ 数据后端选择 ============
-
-// Vercel 生产环境使用 KV 存储，本地开发使用 JSON 文件
-let kv: typeof import("@vercel/kv").kv | null = null;
-
-async function getKv() {
-  if (kv) return kv;
-  if (process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN) {
-    const mod = await import("@vercel/kv");
-    kv = mod.kv;
-    return kv;
-  }
-  return null;
 }
 
 // ============ JSON 文件后端（本地开发） ============
@@ -71,38 +53,106 @@ function getNextId<T extends { id: number }>(items: T[]): number {
   return items.reduce((max, item) => Math.max(max, item.id), 0) + 1;
 }
 
-// ============ 作品数据 ============
+// ============ GitHub API 后端（Vercel 生产环境） ============
 
-const PROJECTS_KEY = "projects";
+const REPO_OWNER = "kaiber1983";
+const REPO_NAME = "video-portfolio";
+const BRANCH = "master";
+
+function hasGithubToken(): boolean {
+  return !!process.env.GITHUB_TOKEN;
+}
+
+// 从 GitHub 读取 JSON 文件
+async function readJsonFromGithub<T>(filename: string): Promise<T[]> {
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data/${filename}?ref=${BRANCH}`;
+  const res = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Accept: "application/vnd.github.v3+json",
+    },
+  });
+
+  if (!res.ok) {
+    if (res.status === 404) return [];
+    throw new Error(`GitHub 读取失败: ${res.status}`);
+  }
+
+  const data = await res.json();
+  const content = Buffer.from(data.content, "base64").toString("utf-8");
+  return JSON.parse(content) as T[];
+}
+
+// 写入 JSON 文件到 GitHub
+async function writeJsonToGitHub<T>(filename: string, data: T[], message: string): Promise<void> {
+  // 先获取当前文件 SHA（如果存在）
+  let sha = "";
+  try {
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data/${filename}?ref=${BRANCH}`;
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+    });
+    if (res.ok) {
+      const fileData = await res.json();
+      sha = fileData.sha;
+    }
+  } catch {
+    // 文件不存在，忽略
+  }
+
+  const content = Buffer.from(JSON.stringify(data, null, 2) + "\n").toString("base64");
+
+  const putUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data/${filename}`;
+  const body: Record<string, string> = {
+    message,
+    content,
+    branch: BRANCH,
+  };
+  if (sha) body.sha = sha;
+
+  const res = await fetch(putUrl, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Accept: "application/vnd.github.v3+json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`GitHub 写入失败: ${res.status} ${err}`);
+  }
+}
+
+// ============ 作品数据 ============
 
 export function readProjects(): Project[] {
   return readJson<Project>("projects.json");
 }
 
 export async function readProjectsRemote(): Promise<Project[]> {
-  const client = await getKv();
-  if (!client) return readProjects();
-  const data = await client.get<string>(PROJECTS_KEY);
-  if (!data) return readProjects();
+  if (!hasGithubToken()) return readProjects();
   try {
-    return JSON.parse(data) as Project[];
-  } catch {
+    return await readJsonFromGithub<Project>("projects.json");
+  } catch (e) {
+    console.error("GitHub 读取作品失败:", e);
     return readProjects();
   }
 }
-
-// 首页使用这个异步版本
-export { readProjectsRemote as readProjectsAsync };
 
 export function writeProjects(projects: Project[]): void {
   writeJson("projects.json", projects);
 }
 
-export async function writeProjectsRemote(projects: Project[]): Promise<void> {
+export async function writeProjectsRemote(projects: Project[], message?: string): Promise<void> {
   writeProjects(projects);
-  const client = await getKv();
-  if (client) {
-    await client.set(PROJECTS_KEY, JSON.stringify(projects));
+  if (hasGithubToken()) {
+    await writeJsonToGitHub("projects.json", projects, message || "更新作品数据");
   }
 }
 
@@ -112,21 +162,18 @@ export function getNextProjectId(projects: Project[]): number {
 
 // ============ 关于我数据 ============
 
-const ABOUT_KEY = "about";
-
 export function readAbout(): About | null {
   const list = readJson<About>("about.json");
   return list.length > 0 ? list[0] : null;
 }
 
 export async function readAboutRemote(): Promise<About | null> {
-  const client = await getKv();
-  if (!client) return readAbout();
-  const data = await client.get<string>(ABOUT_KEY);
-  if (!data) return readAbout();
+  if (!hasGithubToken()) return readAbout();
   try {
-    return JSON.parse(data) as About;
-  } catch {
+    const list = await readJsonFromGithub<About>("about.json");
+    return list.length > 0 ? list[0] : null;
+  } catch (e) {
+    console.error("GitHub 读取关于失败:", e);
     return readAbout();
   }
 }
@@ -137,28 +184,23 @@ export function writeAbout(about: About): void {
 
 export async function writeAboutRemote(about: About): Promise<void> {
   writeAbout(about);
-  const client = await getKv();
-  if (client) {
-    await client.set(ABOUT_KEY, JSON.stringify(about));
+  if (hasGithubToken()) {
+    await writeJsonToGitHub("about.json", [about], "更新关于我信息");
   }
 }
 
 // ============ 留言数据 ============
-
-const MESSAGES_KEY = "messages";
 
 export function readMessages(): ContactMessage[] {
   return readJson<ContactMessage>("messages.json");
 }
 
 export async function readMessagesRemote(): Promise<ContactMessage[]> {
-  const client = await getKv();
-  if (!client) return readMessages();
-  const data = await client.get<string>(MESSAGES_KEY);
-  if (!data) return readMessages();
+  if (!hasGithubToken()) return readMessages();
   try {
-    return JSON.parse(data) as ContactMessage[];
-  } catch {
+    return await readJsonFromGithub<ContactMessage>("messages.json");
+  } catch (e) {
+    console.error("GitHub 读取留言失败:", e);
     return readMessages();
   }
 }
@@ -169,9 +211,8 @@ export function writeMessages(messages: ContactMessage[]): void {
 
 export async function writeMessagesRemote(messages: ContactMessage[]): Promise<void> {
   writeMessages(messages);
-  const client = await getKv();
-  if (client) {
-    await client.set(MESSAGES_KEY, JSON.stringify(messages));
+  if (hasGithubToken()) {
+    await writeJsonToGitHub("messages.json", messages, "更新留言数据");
   }
 }
 
