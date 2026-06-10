@@ -61,7 +61,7 @@ export default function AdminProjectForm({
 
       const data = await res.json();
       setThumbnailUrl(data.url);
-      setPreview(data.url);
+      // 保留本地 Blob URL 作为预览，因为 Vercel 上图片可能还没部署完成
     } catch (err) {
       setError(err instanceof Error ? err.message : "上传失败");
       setPreview(thumbnailUrl || "");
