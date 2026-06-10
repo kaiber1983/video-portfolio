@@ -5,6 +5,9 @@ import { readProjectsRemote } from "@/lib/data";
 import type { Project } from "@/lib/data";
 import HomeContent from "./HomeContent";
 
+// 强制每次请求都重新渲染，不使用静态缓存
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   let projects: Project[] = [];
   let fetchError = false;
