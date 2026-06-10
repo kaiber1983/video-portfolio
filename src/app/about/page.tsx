@@ -35,7 +35,12 @@ const socialNames: Record<string, string> = {
 };
 
 export default async function AboutPage() {
-  const about = await prisma.about.findFirst();
+  let about: Awaited<ReturnType<typeof prisma.about.findFirst>> | null = null;
+  try {
+    about = await prisma.about.findFirst();
+  } catch {
+    console.warn("数据库不可用，显示空状态");
+  }
 
   if (!about) {
     return (
