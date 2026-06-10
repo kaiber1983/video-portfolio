@@ -1,46 +1,41 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { readProjects, writeProjects, getNextProjectId } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
-// GET /api/projects — 获取全部作品
+/** 获取所有作品 */
 export async function GET() {
-  try {
-    const projects = await prisma.project.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-    return NextResponse.json(projects);
-  } catch {
-    return NextResponse.json({ error: "数据库不可用" }, { status: 503 });
-  }
+  const projects = readProjects();
+  return NextResponse.json(projects);
 }
 
-// POST /api/projects — 新建作品
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
+/** 新增作品 */
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { title, description, thumbnail, videoUrl, platform, tags, featured } = body;
 
-    if (!body.title || !body.videoUrl) {
-      return NextResponse.json(
-        { error: "标题和视频链接为必填项" },
-        { status: 400 }
-      );
-    }
-
-    const project = await prisma.project.create({
-      data: {
-        title: body.title,
-        description: body.description || "",
-        thumbnail: body.thumbnail || "",
-        videoUrl: body.videoUrl,
-        platform: body.platform || "youtube",
-        tags: body.tags || "",
-        featured: body.featured || false,
-      },
-    });
-
-    return NextResponse.json(project, { status: 201 });
-  } catch {
-    return NextResponse.json({ error: "数据库不可用" }, { status: 503 });
+  if (!title || !description) {
+    return NextResponse.json(
+      { error: "标题和描述不能为空" },
+      { status: 400 }
+    );
   }
+
+  const projects = readProjects();
+  const newProject = {
+    id: getNextProjectId(projects),
+    title,
+    description: description || "",
+    thumbnail: thumbnail || "",
+    videoUrl: videoUrl || "",
+    platform: platform || "youtube",
+    tags: tags || "",
+    featured: featured || false,
+    createdAt: new Date().toISOString(),
+  };
+
+  projects.push(newProject);
+  writeProjects(projects);
+
+  return NextResponse.json(newProject, { status: 201 });
 }

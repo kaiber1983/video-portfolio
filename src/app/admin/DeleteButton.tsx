@@ -16,6 +16,9 @@ export default function DeleteButton({
     const res = await fetch(`/api/projects/${id}`, { method: "DELETE" });
     if (res.ok) {
       router.refresh();
+    } else {
+      const data = await res.json().catch(() => ({ error: "删除失败" }));
+      alert(data.error || "删除失败，请重试");
     }
     setConfirming(false);
   };

@@ -33,6 +33,9 @@ yarn-error.log*
 *.db
 *.db-journal
 
+# user data (留言数据不应提交到仓库)
+data/messages.json
+
 # vercel
 .vercel
 

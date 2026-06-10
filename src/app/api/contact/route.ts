@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { readMessages, writeMessages, getNextMessageId } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -14,19 +14,44 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const message = await prisma.contactMessage.create({
-      data: {
-        name: body.name,
-        email: body.email,
-        message: body.message,
-      },
-    });
+    // 内容长度校验
+    if (body.name.length > 100) {
+      return NextResponse.json(
+        { error: "姓名不能超过 100 个字符" },
+        { status: 400 }
+      );
+    }
+    if (body.email.length > 200) {
+      return NextResponse.json(
+        { error: "邮箱不能超过 200 个字符" },
+        { status: 400 }
+      );
+    }
+    if (body.message.length > 2000) {
+      return NextResponse.json(
+        { error: "留言内容不能超过 2000 个字符" },
+        { status: 400 }
+      );
+    }
+
+    const messages = readMessages();
+    const newMessage = {
+      id: getNextMessageId(messages),
+      name: body.name,
+      email: body.email,
+      message: body.message,
+      read: false,
+      createdAt: new Date().toISOString(),
+    };
+
+    messages.push(newMessage);
+    writeMessages(messages);
 
     return NextResponse.json(
-      { success: true, id: message.id },
+      { success: true, id: newMessage.id },
       { status: 201 }
     );
   } catch {
-    return NextResponse.json({ error: "数据库不可用" }, { status: 503 });
+    return NextResponse.json({ error: "留言保存失败" }, { status: 503 });
   }
 }

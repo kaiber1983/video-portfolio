@@ -1,4 +1,4 @@
-import type { StaticProject } from "@/data/projects";
+import type { Project } from "@/lib/data";
 import ProjectCard from "./ProjectCard";
 import FadeIn from "./FadeIn";
 
@@ -6,7 +6,7 @@ export default function ProjectGrid({
   projects,
   stagger,
 }: {
-  projects: StaticProject[];
+  projects: Project[];
   stagger?: boolean;
 }) {
   if (projects.length === 0) {

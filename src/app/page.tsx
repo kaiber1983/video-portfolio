@@ -1,34 +1,50 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Hero3D from "@/components/Hero3D";
 import TagFilter from "@/components/TagFilter";
 import ProjectGrid from "@/components/ProjectGrid";
 import FadeIn from "@/components/FadeIn";
-import { getAllProjects, getAllTags } from "@/data/projects";
+import type { Project } from "@/lib/data";
 
 /** 读取 URL 参数并筛选作品的内部组件 */
 function HomeContent() {
   const searchParams = useSearchParams();
   const activeTag = searchParams.get("tag") || "";
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const allProjects = getAllProjects();
-  const allTags = getAllTags();
+  useEffect(() => {
+    fetch("/api/projects")
+      .then((res) => res.json())
+      .then((data) => {
+        setProjects(Array.isArray(data) ? data : []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
+  }, []);
 
-  // 根据标签筛选作品
+  // 计算所有不重复标签
+  const allTags = Array.from(
+    new Set(projects.flatMap((p) => p.tags.split(",").map((t) => t.trim()).filter(Boolean)))
+  );
+
+  // 根据标签筛选
   const filteredProjects = activeTag
-    ? allProjects.filter((p) =>
+    ? projects.filter((p) =>
         p.tags.split(",").some((t) => t.trim() === activeTag)
       )
-    : allProjects;
+    : projects;
 
   return (
     <main>
-      {/* 全屏 3D Hero */}
       <Hero3D />
 
-      {/* 作品区域 */}
       <section className="relative z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
           <FadeIn>
@@ -40,11 +56,28 @@ function HomeContent() {
               <span className="w-8 h-[1px] bg-accent-purple/30" />
             </div>
 
-            <TagFilter tags={allTags} />
+            {!loading && <TagFilter tags={allTags} />}
           </FadeIn>
 
           <FadeIn delay={100}>
-            <ProjectGrid projects={filteredProjects} stagger />
+            {error ? (
+              <div className="text-center py-20">
+                <p className="text-lg text-ink-muted mb-2">加载失败</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="text-sm text-accent-blue hover:text-accent-indigo transition-colors"
+                >
+                  点击重试
+                </button>
+              </div>
+            ) : loading ? (
+              <div className="text-center py-20">
+                <div className="w-8 h-8 border-2 border-accent-purple/30 border-t-accent-purple rounded-full animate-spin mx-auto" />
+                <p className="text-sm text-ink-muted mt-4">加载中...</p>
+              </div>
+            ) : (
+              <ProjectGrid projects={filteredProjects} stagger />
+            )}
           </FadeIn>
         </div>
       </section>

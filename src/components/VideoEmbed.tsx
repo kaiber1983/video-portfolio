@@ -18,7 +18,7 @@ export default function VideoEmbed({
       // 从 BV 号生成 Bilibili 播放器嵌入链接
       const bvMatch = videoUrl.match(/BV[\w]+/);
       if (bvMatch) {
-        return `//player.bilibili.com/player.html?bvid=${bvMatch[0]}&page=1&high_quality=1`;
+        return `https://player.bilibili.com/player.html?bvid=${bvMatch[0]}&page=1&high_quality=1`;
       }
     }
     return videoUrl;
@@ -34,6 +34,7 @@ export default function VideoEmbed({
         className="w-full h-full"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
+        sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
       />
     </div>
   );

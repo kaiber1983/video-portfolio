@@ -19,12 +19,14 @@ const config: Config = {
           muted: "#1C1C1E",
         },
         accent: {
+          DEFAULT: "#D48BA6",
           blue: "#D48BA6",
           purple: "#ECA8D6",
           indigo: "#B06D8A",
           glow: "rgba(212, 139, 166, 0.12)",
           dim: "rgba(212, 139, 166, 0.06)",
         },
+        "accent-hover": "#B06D8A",
         ink: {
           DEFAULT: "#EDECEA",
           muted: "#A3A19E",

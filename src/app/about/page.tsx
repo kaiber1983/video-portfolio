@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { prisma } from "@/lib/prisma";
+import { readAbout } from "@/lib/data";
 import type { Metadata } from "next";
 import FadeIn from "@/components/FadeIn";
 
@@ -35,11 +35,11 @@ const socialNames: Record<string, string> = {
 };
 
 export default async function AboutPage() {
-  let about: Awaited<ReturnType<typeof prisma.about.findFirst>> | null = null;
+  let about = null;
   try {
-    about = await prisma.about.findFirst();
+    about = readAbout();
   } catch {
-    console.warn("数据库不可用，显示空状态");
+    console.warn("数据读取失败，显示空状态");
   }
 
   if (!about) {
@@ -51,7 +51,12 @@ export default async function AboutPage() {
     );
   }
 
-  const socialLinks = JSON.parse(about.socialJson) as Record<string, string>;
+  let socialLinks: Record<string, string> = {};
+  try {
+    socialLinks = JSON.parse(about.socialJson);
+  } catch {
+    // JSON 解析失败，使用空对象
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-16 md:py-20">

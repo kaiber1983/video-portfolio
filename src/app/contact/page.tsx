@@ -93,6 +93,7 @@ export default function ContactPage() {
                   required
                   className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-ink-dim focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm"
                   placeholder="你的名字"
+                  maxLength={100}
                 />
               </div>
 
@@ -106,6 +107,7 @@ export default function ContactPage() {
                   required
                   className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-ink-dim focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm"
                   placeholder="your@email.com"
+                  maxLength={200}
                 />
               </div>
 
@@ -119,6 +121,7 @@ export default function ContactPage() {
                   rows={5}
                   className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-ink-dim focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm resize-none"
                   placeholder="你想说什么..."
+                  maxLength={2000}
                 />
               </div>
 

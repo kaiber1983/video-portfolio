@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { readProjects } from "@/lib/data";
 import Link from "next/link";
 import AdminProjectForm from "@/components/AdminProjectForm";
 
@@ -12,9 +12,8 @@ interface EditProjectPageProps {
 export default async function EditProjectPage({
   params,
 }: EditProjectPageProps) {
-  const project = await prisma.project.findUnique({
-    where: { id: parseInt(params.id) },
-  });
+  const projects = readProjects();
+  const project = projects.find((p) => p.id === parseInt(params.id));
 
   if (!project) notFound();
 

@@ -22,6 +22,7 @@ export default function AboutForm({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const defaultSocials = initialData?.socialLinks ?? {
     bilibili: "",
@@ -33,6 +34,7 @@ export default function AboutForm({
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
+    setError("");
 
     const form = new FormData(e.currentTarget);
     const socialLinks: SocialLinks = {};
@@ -63,8 +65,9 @@ export default function AboutForm({
       setSuccess(true);
       router.refresh();
       setTimeout(() => setSuccess(false), 3000);
-    } catch {
+    } catch (err) {
       setSuccess(false);
+      setError(err instanceof Error ? err.message : "保存失败，请重试");
     } finally {
       setLoading(false);
     }
@@ -75,6 +78,11 @@ export default function AboutForm({
       {success && (
         <div className="p-3 rounded-lg bg-green-900/50 text-green-300 text-sm border border-green-800">
           保存成功
+        </div>
+      )}
+      {error && (
+        <div className="p-3 rounded-lg bg-red-900/50 text-red-300 text-sm border border-red-800">
+          {error}
         </div>
       )}
 

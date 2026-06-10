@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { StaticProject } from "@/data/projects";
+import type { Project } from "@/lib/data";
 
-export default function ProjectCard({ project }: { project: StaticProject }) {
+export default function ProjectCard({ project }: { project: Project }) {
   const shortDesc =
     project.description.length > 80
       ? project.description.slice(0, 80) + "..."

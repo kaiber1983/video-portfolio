@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProjectById } from "@/data/projects";
+import { readProjects } from "@/lib/data";
 import BackButton from "@/components/BackButton";
 import VideoEmbed from "@/components/VideoEmbed";
 
@@ -11,7 +11,8 @@ interface ProjectPageProps {
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const project = getProjectById(params.id);
+  const projects = readProjects();
+  const project = projects.find((p) => p.id === parseInt(params.id));
   if (!project) return { title: "作品未找到" };
   return {
     title: `${project.title} - 作品详情`,
@@ -20,7 +21,8 @@ export async function generateMetadata({
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = getProjectById(params.id);
+  const projects = readProjects();
+  const project = projects.find((p) => p.id === parseInt(params.id));
 
   if (!project) {
     notFound();
@@ -30,10 +32,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 md:py-16">
-      {/* 面包屑 */}
       <BackButton />
 
-      {/* 视频播放器 */}
       <div className="rounded-xl overflow-hidden border border-white/[0.06] shadow-[0_4px_24px_-8px_rgba(0,0,0,0.3)]">
         <VideoEmbed
           videoUrl={project.videoUrl}
@@ -42,7 +42,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         />
       </div>
 
-      {/* 作品信息 */}
       <div className="mt-8 space-y-6">
         <div className="gradient-divider" />
 
@@ -50,7 +49,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           {project.title}
         </h1>
 
-        {/* 标签 */}
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <a
@@ -63,12 +61,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           ))}
         </div>
 
-        {/* 描述 */}
         <p className="text-ink-muted leading-relaxed whitespace-pre-line font-light">
           {project.description}
         </p>
 
-        {/* 元信息 */}
         <div className="text-xs text-ink-dim pt-6 gradient-divider">
           <div className="flex items-center gap-4 pt-4">
             <span className="flex items-center gap-1.5">

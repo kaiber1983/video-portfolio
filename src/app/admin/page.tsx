@@ -1,17 +1,12 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { readProjects } from "@/lib/data";
 import DeleteButton from "./DeleteButton";
+import LogoutButton from "./LogoutButton";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const projects = await prisma.project.findMany({
-    orderBy: { createdAt: "desc" },
-  });
-
-  const unreadCount = await prisma.contactMessage.count({
-    where: { read: false },
-  });
+  const projects = readProjects();
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
@@ -24,6 +19,7 @@ export default async function AdminPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          <LogoutButton />
           <Link
             href="/admin/about"
             className="px-4 py-2 rounded-lg bg-[#1e1e1e] text-[#a0a0a0] hover:text-white hover:bg-[#2a2a2a] transition-colors text-sm font-medium"
@@ -32,14 +28,9 @@ export default async function AdminPage() {
           </Link>
           <Link
             href="/admin/messages"
-            className="px-4 py-2 rounded-lg bg-[#1e1e1e] text-[#a0a0a0] hover:text-white hover:bg-[#2a2a2a] transition-colors text-sm font-medium relative"
+            className="px-4 py-2 rounded-lg bg-[#1e1e1e] text-[#a0a0a0] hover:text-white hover:bg-[#2a2a2a] transition-colors text-sm font-medium"
           >
             留言
-            {unreadCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
-                {unreadCount}
-              </span>
-            )}
           </Link>
           <Link
             href="/admin/new"
@@ -62,10 +53,11 @@ export default async function AdminPage() {
           </Link>
         </div>
       ) : (
-        <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] overflow-hidden">
+        <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-[#2a2a2a] text-[#a0a0a0]">
+                <th className="text-left px-4 py-3 font-medium">ID</th>
                 <th className="text-left px-4 py-3 font-medium">标题</th>
                 <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
                   平台
@@ -83,6 +75,7 @@ export default async function AdminPage() {
                   key={p.id}
                   className="border-b border-[#2a2a2a] last:border-none hover:bg-[#2a2a2a]/50 transition-colors"
                 >
+                  <td className="px-4 py-3 text-[#a0a0a0]">{p.id}</td>
                   <td className="px-4 py-3 font-medium">{p.title}</td>
                   <td className="px-4 py-3 text-[#a0a0a0] hidden md:table-cell">
                     {p.platform === "youtube" ? "YouTube" : "Bilibili"}

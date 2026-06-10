@@ -171,7 +171,7 @@ export default function AdminProjectForm({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={preview}
-              alt="封面预览"
+              alt="作品封面图片预览"
               className="w-full h-full object-cover"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";

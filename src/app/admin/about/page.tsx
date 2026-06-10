@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { readAbout } from "@/lib/data";
 import AboutForm from "./AboutForm";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminAboutPage() {
-  const about = await prisma.about.findFirst();
+  const about = readAbout();
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">

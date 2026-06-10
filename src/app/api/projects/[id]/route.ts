@@ -1,59 +1,64 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { readProjects, writeProjects } from "@/lib/data";
 
-// GET /api/projects/:id — 获取单个作品
+export const dynamic = "force-dynamic";
+
+/** 获取单个作品 */
 export async function GET(
-  _req: NextRequest,
+  _request: Request,
   { params }: { params: { id: string } }
 ) {
-  const project = await prisma.project.findUnique({
-    where: { id: parseInt(params.id) },
-  });
+  const id = parseInt(params.id);
+  const projects = readProjects();
+  const project = projects.find((p) => p.id === id);
 
   if (!project) {
-    return NextResponse.json({ error: "作品未找到" }, { status: 404 });
+    return NextResponse.json({ error: "作品不存在" }, { status: 404 });
   }
 
   return NextResponse.json(project);
 }
 
-// PUT /api/projects/:id — 更新作品
+/** 更新作品 */
 export async function PUT(
-  req: NextRequest,
+  request: Request,
   { params }: { params: { id: string } }
 ) {
-  const body = await req.json();
+  const id = parseInt(params.id);
+  const body = await request.json();
+  const projects = readProjects();
+  const index = projects.findIndex((p) => p.id === id);
 
-  try {
-    const project = await prisma.project.update({
-      where: { id: parseInt(params.id) },
-      data: {
-        title: body.title,
-        description: body.description,
-        thumbnail: body.thumbnail,
-        videoUrl: body.videoUrl,
-        platform: body.platform,
-        tags: body.tags,
-        featured: body.featured,
-      },
-    });
-    return NextResponse.json(project);
-  } catch {
-    return NextResponse.json({ error: "作品未找到" }, { status: 404 });
+  if (index === -1) {
+    return NextResponse.json({ error: "作品不存在" }, { status: 404 });
   }
+
+  projects[index] = {
+    ...projects[index],
+    ...body,
+    id, // 防止 ID 被修改
+  };
+
+  writeProjects(projects);
+
+  return NextResponse.json(projects[index]);
 }
 
-// DELETE /api/projects/:id — 删除作品
+/** 删除作品 */
 export async function DELETE(
-  _req: NextRequest,
+  _request: Request,
   { params }: { params: { id: string } }
 ) {
-  try {
-    await prisma.project.delete({
-      where: { id: parseInt(params.id) },
-    });
-    return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: "作品未找到" }, { status: 404 });
+  const id = parseInt(params.id);
+  const projects = readProjects();
+  const index = projects.findIndex((p) => p.id === id);
+
+  if (index === -1) {
+    return NextResponse.json({ error: "作品不存在" }, { status: 404 });
   }
+
+  projects.splice(index, 1);
+  writeProjects(projects);
+
+  return NextResponse.json({ success: true });
 }

@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { readMessages } from "@/lib/data";
 import MarkReadButton from "./MarkReadButton";
 
 export const dynamic = "force-dynamic";
 
 export default async function MessagesPage() {
-  const messages = await prisma.contactMessage.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const messages = readMessages().sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 
   const unreadCount = messages.filter((m) => !m.read).length;
 

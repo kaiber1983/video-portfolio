@@ -18,8 +18,23 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "个人作品集 | 视频创作",
+  title: {
+    default: "个人作品集 | 视频创作",
+    template: "%s | 个人作品集",
+  },
   description: "个人视频创作作品展示 — director's cut",
+  openGraph: {
+    title: "个人作品集 | 视频创作",
+    description: "个人视频创作作品展示 — director's cut",
+    siteName: "个人作品集",
+    type: "website",
+    locale: "zh_CN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "个人作品集 | 视频创作",
+    description: "个人视频创作作品展示 — director's cut",
+  },
 };
 
 export default function RootLayout({
