@@ -1,26 +1,7 @@
 "use client";
 
-import { useRef, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import dynamic from "next/dynamic";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useScrollProgress } from "@/components/Scene3D";
-
-const Scene3D = dynamic(() => import("@/components/Scene3D"), { ssr: false });
-
-// 粉色钻石光标 SVG
-const DIAMOND_CURSOR = [
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'",
-  "width='24' height='24' viewBox='0 0 24 24'%3E%3Cdefs%3E",
-  "%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E",
-  "%3Cstop offset='0%25' stop-color='%23ECA8D6'/%3E",
-  "%3Cstop offset='100%25' stop-color='%23D48BA6'/%3E",
-  "%3C/linearGradient%3E%3C/defs%3E",
-  "%3Cpath d='M12 2l3 4h4l-3 4l3 4h-4l-3 4l-3-4H5l3-4l-3-4h4z'",
-  "fill='url(%23g)' stroke='%23B06D8A' stroke-width='0.5'/%3E",
-  "%3Ccircle cx='12' cy='12' r='2' fill='white' opacity='0.6'/%3E",
-  "%3C/svg%3E\") 12 2, auto",
-].join("");
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -40,26 +21,30 @@ const childVariants = {
 };
 
 export default function Hero3D() {
-  const containerRef = useRef<HTMLDivElement>(null!);
-  const scrollRef = useScrollProgress();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // 确保视频自动播放（某些浏览器会在加载后暂停）
+    videoRef.current?.play().catch(() => {});
+  }, []);
 
   return (
-    <section
-      ref={containerRef}
-      className="relative w-full h-screen overflow-hidden bg-surface"
-      style={{ cursor: DIAMOND_CURSOR }}
-    >
-      {/* 3D 场景 */}
+    <section className="relative w-full h-screen overflow-hidden bg-black">
+      {/* 视频背景 */}
       <div className="absolute inset-0">
-        <Suspense fallback={null}>
-          <Canvas
-            camera={{ position: [0, 1.5, 8], fov: 50 }}
-            dpr={[1, 1.5]}
-            gl={{ antialias: true, alpha: true }}
-          >
-            <Scene3D scrollRef={scrollRef} />
-          </Canvas>
-        </Suspense>
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
+        {/* 暗色遮罩，确保文字可读 */}
+        <div className="absolute inset-0 bg-black/55" />
       </div>
 
       {/* 粉紫光晕装饰 */}
