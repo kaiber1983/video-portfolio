@@ -19,6 +19,49 @@ interface AdminProjectFormProps {
   projectId?: number;
 }
 
+// 浏览器端压缩图片：限制最大尺寸 1920px，JPEG 质量 0.8，确保不超过 Vercel 4.5MB 限制
+async function compressForUpload(file: File): Promise<File> {
+  // 小于 1MB 的小文件直接上传
+  if (file.size < 1024 * 1024) return file;
+
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      const maxSize = 1920;
+      let { width, height } = img;
+      if (width > maxSize || height > maxSize) {
+        if (width > height) {
+          height = Math.round((height / width) * maxSize);
+          width = maxSize;
+        } else {
+          width = Math.round((width / height) * maxSize);
+          height = maxSize;
+        }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d")!;
+      ctx.drawImage(img, 0, 0, width, height);
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) return reject(new Error("压缩失败"));
+          resolve(new File([blob], file.name, { type: "image/jpeg" }));
+        },
+        "image/jpeg",
+        0.8
+      );
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("图片加载失败"));
+    };
+    img.src = objectUrl;
+  });
+}
+
 export default function AdminProjectForm({
   initialData,
   projectId,
@@ -33,6 +76,16 @@ export default function AdminProjectForm({
 
   const isEdit = !!projectId;
 
+  // 安全解析 JSON，处理 Vercel 返回非 JSON 响应（如 413 超限）
+  async function safeJson(res: Response) {
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch {
+      throw new Error(text.slice(0, 100) || `服务器错误 (HTTP ${res.status})`);
+    }
+  }
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -46,8 +99,11 @@ export default function AdminProjectForm({
     setError("");
 
     try {
+      // 浏览器端压缩图片，避免超过 Vercel 4.5MB 限制
+      const compressed = await compressForUpload(file);
+
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", compressed);
 
       const res = await fetch("/api/upload", {
         method: "POST",
@@ -55,20 +111,19 @@ export default function AdminProjectForm({
       });
 
       if (!res.ok) {
-        const err = await res.json();
+        const err = await safeJson(res);
         throw new Error(err.error || "上传失败");
       }
 
-      const data = await res.json();
+      const data = await safeJson(res);
       setThumbnailUrl(data.url);
-      // 保留本地 Blob URL 作为预览，因为 Vercel 上图片可能还没部署完成
+      // 保留本地 Blob URL 作预览，Vercel 上图片可能还没部署完成
     } catch (err) {
       console.error("图片上传失败:", err);
       setError(err instanceof Error ? err.message : "上传失败");
       // 保留本地 Blob 预览，不清空
     } finally {
       setUploading(false);
-      // 清空 input 以便重复选择同一文件
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
