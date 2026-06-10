@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "title": "城市夜景航拍",
-    "description": "用无人机拍摄的城市夜景，展示了城市在夜晚的独特魅力。使用了 DJI Mini 3 Pro 拍摄，后期用 DaVinci Resolve 调色。",
-    "thumbnail": "https://images.unsplash.com/photo-1514565131-fce0801e2385?w=800",
-    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "platform": "youtube",
-    "tags": "航拍,城市,夜景",
+    "title": "西安文旅宣传片",
+    "description": "AI制作西安文旅宣传片",
+    "thumbnail": "/images/1781067114282-cjp5fe.png",
+    "videoUrl": "https://www.bilibili.com/video/BV1JCTrzSED8/?spm_id_from=333.1387.homepage.video_card.click&vd_source=200e4c695cb34560325d7b17ced91d02",
+    "platform": "bilibili",
+    "tags": "AI宣传片",
     "featured": true,
     "createdAt": "2025-06-01T00:00:00.000Z"
   },
