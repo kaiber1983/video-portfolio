@@ -110,13 +110,14 @@ export default function AdminProjectForm({
         body: formData,
       });
 
+      // 先读 JSON，再判断状态码（响应体只能读一次）
+      const result = await safeJson(res);
+
       if (!res.ok) {
-        const err = await safeJson(res);
-        throw new Error(err.error || "上传失败");
+        throw new Error(result.error || "上传失败");
       }
 
-      const data = await safeJson(res);
-      setThumbnailUrl(data.url);
+      setThumbnailUrl(result.url);
       // 保留本地 Blob URL 作预览，Vercel 上图片可能还没部署完成
     } catch (err) {
       console.error("图片上传失败:", err);
@@ -154,9 +155,10 @@ export default function AdminProjectForm({
         }
       );
 
+      const saveResult = await safeJson(res);
+
       if (!res.ok) {
-        const err = await safeJson(res);
-        throw new Error(err.error || "保存失败");
+        throw new Error(saveResult.error || "保存失败");
       }
 
       router.push("/admin");
