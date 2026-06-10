@@ -33,17 +33,6 @@
     "createdAt": "2025-06-01T00:00:00.000Z"
   },
   {
-    "id": 4,
-    "title": "AI文旅：四川",
-    "description": "AI文旅：四川",
-    "thumbnail": "https://raw.githubusercontent.com/kaiber1983/video-portfolio/master/public/images/1781080338501-ubc7ry.png",
-    "videoUrl": "https://www.bilibili.com/video/BV1H52gB2Em8/?spm_id_from=333.1387.homepage.video_card.click&vd_source=200e4c695cb34560325d7b17ced91d02",
-    "platform": "bilibili",
-    "tags": "AI文旅",
-    "featured": true,
-    "createdAt": "2025-06-15T00:00:00.000Z"
-  },
-  {
     "id": 6,
     "title": "AI短剧：咸鱼影后",
     "description": "AI短剧：咸鱼影后",
@@ -53,6 +42,17 @@
     "tags": "AI短剧",
     "featured": true,
     "createdAt": "2026-06-10T08:49:30.556Z"
+  },
+  {
+    "id": 4,
+    "title": "AI文旅：四川",
+    "description": "AI文旅：四川",
+    "thumbnail": "https://raw.githubusercontent.com/kaiber1983/video-portfolio/master/public/images/1781080338501-ubc7ry.png",
+    "videoUrl": "https://www.bilibili.com/video/BV1H52gB2Em8/?spm_id_from=333.1387.homepage.video_card.click&vd_source=200e4c695cb34560325d7b17ced91d02",
+    "platform": "bilibili",
+    "tags": "AI文旅",
+    "featured": true,
+    "createdAt": "2025-06-15T00:00:00.000Z"
   },
   {
     "id": 5,
