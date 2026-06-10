@@ -34,13 +34,13 @@
   },
   {
     "id": 4,
-    "title": "产品评测：iPhone 15 Pro",
-    "description": "iPhone 15 Pro 两周使用体验，包括相机、性能和续航的详细评测。",
-    "thumbnail": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
-    "videoUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "platform": "youtube",
-    "tags": "评测,科技,数码",
-    "featured": false,
+    "title": "AI创意广告：奥迪",
+    "description": "AI创意广告：奥迪",
+    "thumbnail": "https://raw.githubusercontent.com/kaiber1983/video-portfolio/master/public/images/1781080039496-erlr4b.png",
+    "videoUrl": "https://www.bilibili.com/video/BV15W6VYKEiG/?spm_id_from=333.1387.homepage.video_card.click&vd_source=200e4c695cb34560325d7b17ced91d02",
+    "platform": "bilibili",
+    "tags": "AI创意广告",
+    "featured": true,
     "createdAt": "2025-06-15T00:00:00.000Z"
   },
   {
