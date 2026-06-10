@@ -5,9 +5,11 @@ import { useState } from "react";
 
 export default function DeleteButton({
   id,
+  onDeleted,
 }: {
   id: number;
   title: string;
+  onDeleted?: (id: number) => void;
 }) {
   const router = useRouter();
   const [confirming, setConfirming] = useState(false);
@@ -15,10 +17,13 @@ export default function DeleteButton({
   const handleDelete = async () => {
     const res = await fetch(`/api/projects/${id}`, { method: "DELETE" });
     if (res.ok) {
+      onDeleted?.(id);
       router.refresh();
     } else {
-      const data = await res.json().catch(() => ({ error: "删除失败" }));
-      alert(data.error || "删除失败，请重试");
+      const text = await res.text();
+      let msg = "删除失败";
+      try { msg = JSON.parse(text).error || msg; } catch {}
+      alert(msg);
     }
     setConfirming(false);
   };

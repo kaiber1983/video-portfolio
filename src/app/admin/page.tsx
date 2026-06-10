@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { readProjects } from "@/lib/data";
-import DeleteButton from "./DeleteButton";
+import { readProjectsRemote } from "@/lib/data";
 import LogoutButton from "./LogoutButton";
+import SortableProjectTable from "@/components/SortableProjectTable";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const projects = readProjects();
+  const projects = await readProjectsRemote();
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
@@ -53,61 +53,7 @@ export default async function AdminPage() {
           </Link>
         </div>
       ) : (
-        <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-[#2a2a2a] text-[#a0a0a0]">
-                <th className="text-left px-4 py-3 font-medium">ID</th>
-                <th className="text-left px-4 py-3 font-medium">标题</th>
-                <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
-                  平台
-                </th>
-                <th className="text-left px-4 py-3 font-medium hidden md:table-cell">
-                  标签
-                </th>
-                <th className="text-left px-4 py-3 font-medium w-16">精选</th>
-                <th className="text-right px-4 py-3 font-medium w-32">操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projects.map((p) => (
-                <tr
-                  key={p.id}
-                  className="border-b border-[#2a2a2a] last:border-none hover:bg-[#2a2a2a]/50 transition-colors"
-                >
-                  <td className="px-4 py-3 text-[#a0a0a0]">{p.id}</td>
-                  <td className="px-4 py-3 font-medium">{p.title}</td>
-                  <td className="px-4 py-3 text-[#a0a0a0] hidden md:table-cell">
-                    {p.platform === "youtube" ? "YouTube" : "Bilibili"}
-                  </td>
-                  <td className="px-4 py-3 text-[#a0a0a0] hidden md:table-cell">
-                    {p.tags || "—"}
-                  </td>
-                  <td className="px-4 py-3">
-                    {p.featured ? (
-                      <span className="text-xs px-1.5 py-0.5 rounded bg-accent/20 text-accent">
-                        精选
-                      </span>
-                    ) : (
-                      <span className="text-[#666]">—</span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <Link
-                        href={`/admin/edit/${p.id}`}
-                        className="px-3 py-1 rounded-md bg-[#2a2a2a] text-[#a0a0a0] hover:text-white transition-colors text-xs"
-                      >
-                        编辑
-                      </Link>
-                      <DeleteButton id={p.id} title={p.title} />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <SortableProjectTable projects={projects} />
       )}
     </div>
   );
