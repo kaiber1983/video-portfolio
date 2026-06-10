@@ -72,7 +72,7 @@ export default function Hero3D() {
 
           <motion.h1
             variants={childVariants}
-            className="font-display text-5xl md:text-7xl leading-tight mb-4"
+            className="font-pixel text-5xl md:text-7xl leading-tight mb-4"
             style={{
               background: "linear-gradient(135deg, #ECA8D6 0%, #D48BA6 50%, #B06D8A 100%)",
               WebkitBackgroundClip: "text",

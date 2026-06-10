@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Space_Grotesk } from "next/font/google";
+import { Fraunces, Space_Grotesk, ZCOOL_QingKe_HuangYou } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -14,6 +14,13 @@ const fraunces = Fraunces({
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap",
+});
+
+const zcoolQingKe = ZCOOL_QingKe_HuangYou({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-pixel",
   display: "swap",
 });
 
@@ -43,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh-CN" className={`${fraunces.variable} ${spaceGrotesk.variable}`}>
+    <html lang="zh-CN" className={`${fraunces.variable} ${spaceGrotesk.variable} ${zcoolQingKe.variable}`}>
       <body className="min-h-screen flex flex-col text-ink antialiased font-body bg-surface">
         <Header />
         <main className="flex-1">{children}</main>

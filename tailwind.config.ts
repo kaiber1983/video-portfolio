@@ -11,6 +11,7 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)", "serif"],
         body: ["var(--font-body)", "sans-serif"],
+        pixel: ["var(--font-pixel)", "sans-serif"],
       },
       colors: {
         surface: {
