@@ -23,13 +23,13 @@
   },
   {
     "id": 3,
-    "title": "旅行 Vlog：云南大理",
-    "description": "三天两夜的大理之旅，洱海边骑行、古城漫步、品尝当地美食。",
-    "thumbnail": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=800",
-    "videoUrl": "https://www.bilibili.com/video/BV1GJ411x7h7/",
+    "title": "AI科幻电影：太空战队",
+    "description": "AI科幻：太空行动队",
+    "thumbnail": "https://raw.githubusercontent.com/kaiber1983/video-portfolio/master/public/images/1781079453573-bou8qq.jpg",
+    "videoUrl": "https://www.bilibili.com/video/BV1NkjDzyE1Z/?spm_id_from=333.1387.homepage.video_card.click&vd_source=200e4c695cb34560325d7b17ced91d02",
     "platform": "bilibili",
-    "tags": "旅行,Vlog,云南",
-    "featured": false,
+    "tags": "AI科幻",
+    "featured": true,
     "createdAt": "2025-06-10T00:00:00.000Z"
   },
   {
