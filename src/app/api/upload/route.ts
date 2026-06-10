@@ -68,8 +68,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ url: `/images/${filename}` });
 
   } catch (error) {
-    console.error("上传失败:", error);
-    return NextResponse.json({ error: "上传失败" }, { status: 500 });
+    const message = error instanceof Error ? error.message : "上传失败";
+    console.error("上传失败:", message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
