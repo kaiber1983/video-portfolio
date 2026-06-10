@@ -1,0 +1,103 @@
+// 静态作品数据类型（与 Prisma Schema 镜像）
+export interface StaticProject {
+  id: number;
+  title: string;
+  description: string;
+  thumbnail: string;
+  videoUrl: string;
+  platform: string;
+  tags: string;
+  featured: boolean;
+  createdAt: string;
+}
+
+// 5 条静态作品数据（从 prisma/seed.ts 提取）
+const projects: StaticProject[] = [
+  {
+    id: 1,
+    title: "城市夜景航拍",
+    description:
+      "用无人机拍摄的城市夜景，展示了城市在夜晚的独特魅力。使用了 DJI Mini 3 Pro 拍摄，后期用 DaVinci Resolve 调色。",
+    thumbnail:
+      "https://images.unsplash.com/photo-1514565131-fce0801e2385?w=800",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    platform: "youtube",
+    tags: "航拍,城市,夜景",
+    featured: true,
+    createdAt: "2025-06-01T00:00:00.000Z",
+  },
+  {
+    id: 2,
+    title: "咖啡制作教程",
+    description:
+      "手把手教你做一杯完美的拿铁，从研磨豆子到拉花全过程。",
+    thumbnail:
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    platform: "youtube",
+    tags: "教程,咖啡,生活",
+    featured: true,
+    createdAt: "2025-06-05T00:00:00.000Z",
+  },
+  {
+    id: 3,
+    title: "旅行 Vlog：云南大理",
+    description:
+      "三天两夜的大理之旅，洱海边骑行、古城漫步、品尝当地美食。",
+    thumbnail:
+      "https://images.unsplash.com/photo-1528181304800-259b08848526?w=800",
+    videoUrl: "https://www.bilibili.com/video/BV1GJ411x7h7/",
+    platform: "bilibili",
+    tags: "旅行,Vlog,云南",
+    featured: false,
+    createdAt: "2025-06-10T00:00:00.000Z",
+  },
+  {
+    id: 4,
+    title: "产品评测：iPhone 15 Pro",
+    description:
+      "iPhone 15 Pro 两周使用体验，包括相机、性能和续航的详细评测。",
+    thumbnail:
+      "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    platform: "youtube",
+    tags: "评测,科技,数码",
+    featured: false,
+    createdAt: "2025-06-15T00:00:00.000Z",
+  },
+  {
+    id: 5,
+    title: "延时摄影合集",
+    description:
+      "收集了过去一年的延时摄影作品，从日出到星空，展现自然之美。",
+    thumbnail:
+      "https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?w=800",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    platform: "youtube",
+    tags: "延时摄影,自然,合集",
+    featured: true,
+    createdAt: "2025-06-20T00:00:00.000Z",
+  },
+];
+
+// 根据 ID 查找作品
+export function getProjectById(id: string): StaticProject | undefined {
+  return projects.find((p) => p.id === parseInt(id));
+}
+
+// 获取所有不重复的标签
+export function getAllTags(): string[] {
+  const tagSet = new Set<string>();
+  projects.forEach((p) => {
+    p.tags.split(",").forEach((tag) => {
+      const trimmed = tag.trim();
+      if (trimmed) tagSet.add(trimmed);
+    });
+  });
+  return Array.from(tagSet);
+}
+
+// 导出完整的作品列表
+export function getAllProjects(): StaticProject[] {
+  return projects;
+}

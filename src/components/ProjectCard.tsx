@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import type { Project } from "@prisma/client";
+import type { StaticProject } from "@/data/projects";
 
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({ project }: { project: StaticProject }) {
   const shortDesc =
     project.description.length > 80
       ? project.description.slice(0, 80) + "..."

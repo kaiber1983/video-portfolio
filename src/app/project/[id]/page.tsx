@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { getProjectById } from "@/data/projects";
 import BackButton from "@/components/BackButton";
 import VideoEmbed from "@/components/VideoEmbed";
-
-export const dynamic = "force-dynamic";
 
 interface ProjectPageProps {
   params: { id: string };
@@ -13,10 +11,7 @@ interface ProjectPageProps {
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const project = await prisma.project.findUnique({
-    where: { id: parseInt(params.id) },
-    select: { title: true, description: true },
-  });
+  const project = getProjectById(params.id);
   if (!project) return { title: "作品未找到" };
   return {
     title: `${project.title} - 作品详情`,
@@ -25,9 +20,7 @@ export async function generateMetadata({
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await prisma.project.findUnique({
-    where: { id: parseInt(params.id) },
-  });
+  const project = getProjectById(params.id);
 
   if (!project) {
     notFound();

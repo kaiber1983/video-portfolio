@@ -1,4 +1,4 @@
-import type { Project } from "@prisma/client";
+import type { StaticProject } from "@/data/projects";
 import ProjectCard from "./ProjectCard";
 import FadeIn from "./FadeIn";
 
@@ -6,7 +6,7 @@ export default function ProjectGrid({
   projects,
   stagger,
 }: {
-  projects: Project[];
+  projects: StaticProject[];
   stagger?: boolean;
 }) {
   if (projects.length === 0) {
