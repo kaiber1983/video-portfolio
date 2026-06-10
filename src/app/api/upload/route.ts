@@ -55,7 +55,10 @@ export async function POST(request: Request) {
         throw new Error(`GitHub 上传失败: ${res.status} ${err}`);
       }
 
-      return NextResponse.json({ url: `/images/${filename}` });
+      // 返回 GitHub raw URL，图片立即可用，无需等 Vercel 部署
+      return NextResponse.json({
+        url: `https://raw.githubusercontent.com/kaiber1983/video-portfolio/master/public/images/${filename}`,
+      });
     }
 
     // 本地开发写入 public/images/

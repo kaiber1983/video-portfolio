@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "picui.ogmua.cn",
       },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+      },
     ],
   },
 };

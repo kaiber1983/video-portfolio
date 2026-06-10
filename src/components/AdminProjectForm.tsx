@@ -63,8 +63,9 @@ export default function AdminProjectForm({
       setThumbnailUrl(data.url);
       // 保留本地 Blob URL 作为预览，因为 Vercel 上图片可能还没部署完成
     } catch (err) {
+      console.error("图片上传失败:", err);
       setError(err instanceof Error ? err.message : "上传失败");
-      setPreview(thumbnailUrl || "");
+      // 保留本地 Blob 预览，不清空
     } finally {
       setUploading(false);
       // 清空 input 以便重复选择同一文件
