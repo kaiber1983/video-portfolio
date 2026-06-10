@@ -3,25 +3,104 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --surface: #0A0A0B;
+  --surface-card: #141416;
+  --surface-muted: #1C1C1E;
+  --accent-blue: #D48BA6;
+  --accent-purple: #ECA8D6;
+  --accent-indigo: #B06D8A;
+  --ink: #EDECEA;
+  --ink-muted: #A3A19E;
+  --ink-dim: #6E6C69;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* —— 深色底 —— */
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--surface);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* —— 渐变文字（粉紫光晕） —— */
+.gradient-text {
+  background: linear-gradient(135deg, #ECA8D6 0%, #D48BA6 50%, #B06D8A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 100%;
+}
+
+/* —— 渐变分割线（粉紫） —— */
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212, 139, 166, 0.25) 20%,
+    rgba(236, 168, 214, 0.35) 50%,
+    rgba(212, 139, 166, 0.25) 80%,
+    transparent 100%
+  );
+}
+
+/* —— 卡片悬浮边框（粉紫） —— */
+.card-border {
+  position: relative;
+}
+.card-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 139, 166, 0),
+    rgba(236, 168, 214, 0.08),
+    rgba(212, 139, 166, 0)
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+.card-border:hover::before {
+  opacity: 1;
+}
+
+/* —— 光晕揭示（粉紫） —— */
+.glow-reveal {
+  position: relative;
+  overflow: hidden;
+}
+.glow-reveal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(236, 168, 214, 0.06) 50%,
+    transparent 60%
+  );
+  background-size: 200% 200%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+.glow-reveal:hover::after {
+  opacity: 1;
+}
+
+/* —— 自定义滚动条 —— */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 139, 166, 0.2);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(212, 139, 166, 0.4); }
+
+/* —— 选中颜色 —— */
+::selection {
+  background: rgba(236, 168, 214, 0.35);
+  color: #EDECEA;
 }

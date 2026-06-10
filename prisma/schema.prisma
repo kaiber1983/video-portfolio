@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 作品表
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  thumbnail   String   // 缩略图 URL
+  videoUrl    String   // 视频嵌入 URL
+  platform    String   @default("youtube") // "youtube" 或 "bilibili"
+  tags        String   @default("") // 逗号分隔的标签
+  featured    Boolean  @default(false) // 是否精选
+  createdAt   DateTime @default(now())
+}
+
+// 关于我表（单条记录）
+model About {
+  id         Int    @id @default(autoincrement())
+  name       String
+  bio        String
+  avatarUrl  String
+  socialJson String @default("{}") // JSON 格式存储社交链接
+}
+
+// 留言表
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String   // 联系人
+  email     String   // 邮箱
+  message   String   // 留言内容
+  read      Boolean  @default(false) // 是否已读
+  createdAt DateTime @default(now())
+}
