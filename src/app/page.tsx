@@ -23,7 +23,7 @@ export default async function HomePage() {
       <Hero3D />
 
       <section className="relative z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+        <div className="px-6 md:px-12 lg:px-16 xl:px-20 2xl:px-28 py-24">
           <FadeIn>
             <div className="flex items-center gap-4 mb-10">
               <span className="w-8 h-[1px] bg-accent-purple/30" />

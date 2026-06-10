@@ -4,8 +4,26 @@ import type { Project } from "@/lib/data";
 import ProjectCard from "./ProjectCard";
 import FadeIn from "./FadeIn";
 
-/** 精选作品的宽幅横幅卡片 */
-function HeroBanner({ project, index }: { project: Project; index: number }) {
+// ============ 作品副标题 ============
+const SUBTITLES: Record<number, { zh: string; en: string }> = {
+  3: { zh: "星际征途 — 科幻视觉史诗", en: "A Sci-Fi Vision" },
+  1: { zh: "古都新韵 — 数字之眼", en: "Echoes of Chang'an" },
+  6: { zh: "逆袭的星光 — 影后归来", en: "Star Reborn" },
+  2: { zh: "穿越银河的温柔冒险", en: "Beyond the Stars" },
+  4: { zh: "天府画卷 — 蜀地诗篇", en: "Scroll of Sichuan" },
+  5: { zh: "速度与美学的极致表达", en: "Velocity Refined" },
+};
+
+// ============ 宽幅横幅卡片 ============
+function HeroBanner({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) {
+  const isEven = index % 2 === 0;
+  const sub = SUBTITLES[project.id];
   const tags = project.tags
     .split(",")
     .map((t) => t.trim())
@@ -14,30 +32,35 @@ function HeroBanner({ project, index }: { project: Project; index: number }) {
   return (
     <Link
       href={`/project/${project.id}`}
-      className="group block rounded-2xl overflow-hidden border border-white/[0.04] bg-[#0c0c0e] transition-all duration-500 hover:border-white/[0.1] hover:shadow-[0_20px_60px_-16px_rgba(212,139,166,0.12)]"
+      className="group block rounded-2xl overflow-hidden border border-white/[0.03] bg-[#0c0c0e] transition-all duration-500 hover:border-white/[0.08] hover:shadow-[0_20px_60px_-16px_rgba(212,139,166,0.1)]"
     >
-      <div className="flex flex-col lg:flex-row">
+      <div
+        className={`flex flex-col ${
+          isEven ? "lg:flex-row" : "lg:flex-row-reverse"
+        }`}
+      >
         {/* 图片区 */}
-        <div className="lg:w-[55%] aspect-[16/10] lg:aspect-auto lg:min-h-[360px] relative overflow-hidden bg-[#0a0a0b]">
-          {/* 序号 */}
-          <span className="absolute top-5 left-5 z-10 text-6xl font-display text-white/10 select-none">
+        <div className="lg:w-[55%] aspect-[16/10] lg:aspect-auto lg:min-h-[400px] relative overflow-hidden bg-[#0a0a0b]">
+          {/* 序号水印 */}
+          <span className="absolute top-6 left-6 z-10 text-7xl font-display text-white/[0.06] select-none pointer-events-none">
             {String(index + 1).padStart(2, "0")}
           </span>
 
           {/* 精选标记 */}
-          <span className="absolute top-5 right-5 z-10 px-3 py-1 rounded-md text-[10px] font-medium tracking-[0.2em] uppercase bg-accent/20 text-accent-purple/90 backdrop-blur-sm border border-accent/10">
+          <span className="absolute top-6 right-6 z-10 px-3 py-1 rounded-md text-[10px] font-medium tracking-[0.2em] uppercase bg-accent/20 text-accent-purple/90 backdrop-blur-sm border border-accent/10">
             精选
           </span>
 
           {/* 悬停遮罩 */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-[1]" />
 
           <Image
             src={project.thumbnail}
             alt={project.title}
-            width={1200}
-            height={675}
+            width={1400}
+            height={800}
             className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.03]"
+            priority={index < 2}
           />
 
           {/* 光泽扫过 */}
@@ -55,43 +78,59 @@ function HeroBanner({ project, index }: { project: Project; index: number }) {
         </div>
 
         {/* 文字区 */}
-        <div className="lg:w-[45%] flex flex-col justify-center p-8 lg:p-10 space-y-5">
+        <div className="lg:w-[45%] flex flex-col justify-center p-8 lg:p-12 space-y-5">
+          {/* 顶部装饰线 */}
           <div className="flex items-center gap-3">
-            <span className="text-[10px] tracking-[0.2em] uppercase text-accent-purple/50 font-display">
+            <span className="text-[10px] tracking-[0.25em] uppercase text-accent-purple/40 font-display">
               Featured Work
             </span>
-            <span className="flex-1 h-[1px] bg-accent-purple/10" />
+            <span className="flex-1 h-[1px] bg-accent-purple/[0.08]" />
           </div>
 
-          <h3 className="text-2xl lg:text-3xl font-display text-ink group-hover:text-accent-purple/90 transition-colors duration-300 tracking-wide leading-tight">
-            {project.title}
-          </h3>
+          {/* 标题 + 副标题 */}
+          <div>
+            <h3 className="text-2xl lg:text-3xl font-display text-ink group-hover:text-accent-purple/90 transition-colors duration-300 tracking-wide leading-tight">
+              {project.title}
+            </h3>
 
+            {sub && (
+              <div className="mt-3 space-y-0.5">
+                <p className="text-sm text-ink-muted/60 font-light leading-relaxed">
+                  {sub.zh}
+                </p>
+                <p className="text-[11px] tracking-[0.15em] uppercase text-accent-purple/30 font-display">
+                  {sub.en}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* 描述 */}
           {project.description && (
-            <p className="text-sm text-ink-muted/70 leading-relaxed line-clamp-3 font-light">
+            <p className="text-sm text-ink-muted/50 leading-relaxed line-clamp-3 font-light">
               {project.description}
             </p>
           )}
 
           {/* 底部信息行 */}
-          <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center justify-between pt-3">
             <div className="flex flex-wrap gap-2">
               {tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="text-[11px] px-3 py-1 rounded-md bg-white/[0.03] text-ink-dim/60 tracking-wide border border-white/[0.04]"
+                  className="text-[11px] px-3 py-1 rounded-md bg-white/[0.03] text-ink-dim/50 tracking-wide border border-white/[0.04]"
                 >
                   {tag}
                 </span>
               ))}
               {tags.length > 3 && (
-                <span className="text-[11px] text-ink-dim/40 self-center">
+                <span className="text-[11px] text-ink-dim/30 self-center">
                   +{tags.length - 3}
                 </span>
               )}
             </div>
 
-            <span className="text-[10px] tracking-[0.2em] uppercase text-accent-purple/40 font-display flex items-center gap-1 group-hover:text-accent-purple/60 transition-colors">
+            <span className="text-[10px] tracking-[0.2em] uppercase text-accent-purple/30 font-display flex items-center gap-1.5 group-hover:text-accent-purple/60 transition-colors shrink-0">
               浏览作品
               <svg
                 width="12"
@@ -116,6 +155,7 @@ function HeroBanner({ project, index }: { project: Project; index: number }) {
   );
 }
 
+// ============ 作品展示网格 ============
 export default function ProjectGrid({
   projects,
   stagger,
@@ -126,10 +166,10 @@ export default function ProjectGrid({
   if (projects.length === 0) {
     return (
       <div className="text-center py-32">
-        <p className="text-2xl font-display text-ink-muted/60 mb-3">
+        <p className="text-2xl font-display text-ink-muted/40 mb-3">
           暂无作品
         </p>
-        <p className="text-sm text-ink-dim/50">换个标签筛选试试</p>
+        <p className="text-sm text-ink-dim/40">换个标签筛选试试</p>
       </div>
     );
   }
@@ -138,29 +178,29 @@ export default function ProjectGrid({
   const regular = projects.filter((p) => !p.featured);
 
   return (
-    <div className="space-y-20">
-      {/* 精选作品 - 大幅横幅 */}
+    <div className="space-y-24 lg:space-y-32">
+      {/* 精选作品横幅 — 交替布局 */}
       {featured.length > 0 && (
-        <div className="space-y-12">
+        <div className="space-y-16 lg:space-y-24">
           {featured.map((project, i) => (
-            <FadeIn key={project.id} delay={i * 150}>
+            <FadeIn key={project.id} delay={i * 120}>
               <HeroBanner project={project} index={i} />
             </FadeIn>
           ))}
         </div>
       )}
 
-      {/* 全部作品 - 双列宽敞布局 */}
+      {/* 普通作品双列网格 */}
       {regular.length > 0 && (
         <>
           {featured.length > 0 && (
             <FadeIn>
-              <div className="flex items-center gap-4 mb-10">
-                <span className="w-8 h-[1px] bg-accent-purple/15" />
-                <span className="text-[10px] tracking-[0.25em] uppercase text-accent-purple/50 font-display">
+              <div className="flex items-center gap-4 mb-12">
+                <span className="w-8 h-[1px] bg-accent-purple/10" />
+                <span className="text-[10px] tracking-[0.25em] uppercase text-accent-purple/40 font-display">
                   更多作品
                 </span>
-                <span className="flex-1 h-[1px] bg-accent-purple/8" />
+                <span className="flex-1 h-[1px] bg-accent-purple/[0.04]" />
               </div>
             </FadeIn>
           )}
@@ -177,16 +217,6 @@ export default function ProjectGrid({
             )}
           </div>
         </>
-      )}
-
-      {/* 没有精选也没有普通作品时，全部放在网格里 */}
-      {regular.length === 0 && featured.length === 0 && (
-        <div className="text-center py-32">
-          <p className="text-2xl font-display text-ink-muted/60 mb-3">
-            暂无作品
-          </p>
-          <p className="text-sm text-ink-dim/50">换个标签筛选试试</p>
-        </div>
       )}
     </div>
   );
