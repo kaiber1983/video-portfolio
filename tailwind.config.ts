@@ -29,9 +29,9 @@ const config: Config = {
         },
         "accent-hover": "#B06D8A",
         ink: {
-          DEFAULT: "#EDECEA",
-          muted: "#A3A19E",
-          dim: "#6E6C69",
+          DEFAULT: "#FFFFFF",
+          muted: "#FFFFFF",
+          dim: "#FFFFFF",
         },
       },
       animation: {

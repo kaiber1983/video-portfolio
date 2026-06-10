@@ -47,7 +47,7 @@ function HeroBanner({
           </span>
 
           {/* 精选标记 */}
-          <span className="absolute top-6 right-6 z-10 px-3 py-1 rounded-md text-[10px] font-medium tracking-[0.2em] uppercase bg-accent/20 text-accent-purple/90 backdrop-blur-sm border border-accent/10">
+          <span className="absolute top-6 right-6 z-10 px-3 py-1 rounded-md text-[10px] font-medium tracking-[0.2em] uppercase bg-accent/20 text-white/90 backdrop-blur-sm border border-accent/10">
             精选
           </span>
 
@@ -81,7 +81,7 @@ function HeroBanner({
         <div className="lg:w-[45%] flex flex-col justify-center p-8 lg:p-12 space-y-5">
           {/* 顶部装饰线 */}
           <div className="flex items-center gap-3">
-            <span className="text-[10px] tracking-[0.25em] uppercase text-accent-purple/40 font-display">
+            <span className="text-[10px] tracking-[0.25em] uppercase text-white/40 font-display">
               Featured Work
             </span>
             <span className="flex-1 h-[1px] bg-accent-purple/[0.08]" />
@@ -89,16 +89,16 @@ function HeroBanner({
 
           {/* 标题 + 副标题 */}
           <div>
-            <h3 className="text-2xl lg:text-3xl font-display text-ink group-hover:text-accent-purple/90 transition-colors duration-300 tracking-wide leading-tight">
+            <h3 className="text-2xl lg:text-3xl font-display text-ink group-hover:text-white/90 transition-colors duration-300 tracking-wide leading-tight">
               {project.title}
             </h3>
 
             {sub && (
               <div className="mt-3 space-y-0.5">
-                <p className="text-sm text-ink-muted/60 font-light leading-relaxed">
+                <p className="text-sm text-white/60 font-light leading-relaxed">
                   {sub.zh}
                 </p>
-                <p className="text-[11px] tracking-[0.15em] uppercase text-accent-purple/30 font-display">
+                <p className="text-[11px] tracking-[0.15em] uppercase text-white/30 font-display">
                   {sub.en}
                 </p>
               </div>
@@ -107,7 +107,7 @@ function HeroBanner({
 
           {/* 描述 */}
           {project.description && (
-            <p className="text-sm text-ink-muted/50 leading-relaxed line-clamp-3 font-light">
+            <p className="text-sm text-white/50 leading-relaxed line-clamp-3 font-light">
               {project.description}
             </p>
           )}
@@ -118,19 +118,19 @@ function HeroBanner({
               {tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
-                  className="text-[11px] px-3 py-1 rounded-md bg-white/[0.03] text-ink-dim/50 tracking-wide border border-white/[0.04]"
+                  className="text-[11px] px-3 py-1 rounded-md bg-white/[0.03] text-white/50 tracking-wide border border-white/[0.04]"
                 >
                   {tag}
                 </span>
               ))}
               {tags.length > 3 && (
-                <span className="text-[11px] text-ink-dim/30 self-center">
+                <span className="text-[11px] text-white/30 self-center">
                   +{tags.length - 3}
                 </span>
               )}
             </div>
 
-            <span className="text-[10px] tracking-[0.2em] uppercase text-accent-purple/30 font-display flex items-center gap-1.5 group-hover:text-accent-purple/60 transition-colors shrink-0">
+            <span className="text-[10px] tracking-[0.2em] uppercase text-white/30 font-display flex items-center gap-1.5 group-hover:text-white/60 transition-colors shrink-0">
               浏览作品
               <svg
                 width="12"
@@ -166,10 +166,10 @@ export default function ProjectGrid({
   if (projects.length === 0) {
     return (
       <div className="text-center py-32">
-        <p className="text-2xl font-display text-ink-muted/40 mb-3">
+        <p className="text-2xl font-display text-white/40 mb-3">
           暂无作品
         </p>
-        <p className="text-sm text-ink-dim/40">换个标签筛选试试</p>
+        <p className="text-sm text-white/40">换个标签筛选试试</p>
       </div>
     );
   }
@@ -197,7 +197,7 @@ export default function ProjectGrid({
             <FadeIn>
               <div className="flex items-center gap-4 mb-12">
                 <span className="w-8 h-[1px] bg-accent-purple/10" />
-                <span className="text-[10px] tracking-[0.25em] uppercase text-accent-purple/40 font-display">
+                <span className="text-[10px] tracking-[0.25em] uppercase text-white/40 font-display">
                   更多作品
                 </span>
                 <span className="flex-1 h-[1px] bg-accent-purple/[0.04]" />

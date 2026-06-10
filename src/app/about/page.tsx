@@ -46,7 +46,7 @@ export default async function AboutPage() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
         <h1 className="font-display text-4xl gradient-text mb-4">关于我</h1>
-        <p className="text-ink-muted">暂无信息</p>
+        <p className="text-white">暂无信息</p>
       </div>
     );
   }
@@ -64,7 +64,7 @@ export default async function AboutPage() {
         {/* 页面标题 */}
         <div className="flex items-center gap-3 mb-8">
           <span className="w-6 h-[1px] bg-accent-blue/50" />
-          <span className="text-[10px] tracking-[0.25em] uppercase text-ink-dim font-display">
+          <span className="text-[10px] tracking-[0.25em] uppercase text-white font-display">
             About
           </span>
         </div>
@@ -88,7 +88,7 @@ export default async function AboutPage() {
             <h1 className="font-display text-3xl md:text-4xl gradient-text mb-4">
               {about.name}
             </h1>
-            <p className="text-ink-muted leading-relaxed whitespace-pre-line max-w-lg font-light">
+            <p className="text-white leading-relaxed whitespace-pre-line max-w-lg font-light">
               {about.bio}
             </p>
           </div>
@@ -101,7 +101,7 @@ export default async function AboutPage() {
           <div className="mt-12 pt-8 gradient-divider">
             <div className="flex items-center gap-4 mb-6">
               <span className="w-6 h-[1px] bg-accent-blue/40" />
-              <h2 className="font-display text-sm tracking-[0.2em] uppercase text-accent-indigo">
+              <h2 className="font-display text-sm tracking-[0.2em] uppercase text-white">
                 找到我
               </h2>
             </div>
@@ -112,9 +112,9 @@ export default async function AboutPage() {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-white/[0.08] text-ink-muted hover:text-accent-indigo hover:border-accent-indigo/30 transition-all duration-300 group"
+                  className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-white/[0.08] text-white hover:text-white hover:border-accent-indigo/30 transition-all duration-300 group"
                 >
-                  <span className="group-hover:text-accent-indigo transition-colors">
+                  <span className="group-hover:text-white transition-colors">
                     {socialIcons[platform] || null}
                   </span>
                   <span className="text-sm tracking-wide">

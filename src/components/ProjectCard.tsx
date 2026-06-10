@@ -22,7 +22,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       <div className="aspect-[16/10] overflow-hidden relative bg-[#0a0a0b]">
         {/* 精选角标 */}
         {project.featured && (
-          <span className="absolute top-4 left-4 z-10 px-3 py-1 rounded-md text-[10px] font-medium tracking-[0.2em] uppercase bg-accent/20 text-accent-purple/90 backdrop-blur-sm border border-accent/10">
+          <span className="absolute top-4 left-4 z-10 px-3 py-1 rounded-md text-[10px] font-medium tracking-[0.2em] uppercase bg-accent/20 text-white/90 backdrop-blur-sm border border-accent/10">
             精选
           </span>
         )}
@@ -59,12 +59,12 @@ export default function ProjectCard({ project }: { project: Project }) {
 
       {/* 内容区 */}
       <div className="p-6 space-y-4">
-        <h3 className="text-xl font-display text-ink group-hover:text-accent-purple/90 transition-colors duration-300 tracking-wide leading-snug">
+        <h3 className="text-xl font-display text-ink group-hover:text-white/90 transition-colors duration-300 tracking-wide leading-snug">
           {project.title}
         </h3>
 
         {project.description && (
-          <p className="text-sm text-ink-muted/70 leading-relaxed line-clamp-2 font-light">
+          <p className="text-sm text-white/70 leading-relaxed line-clamp-2 font-light">
             {shortDesc}
           </p>
         )}
@@ -75,7 +75,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="text-[11px] px-3 py-1 rounded-md bg-white/[0.03] text-ink-dim/60 tracking-wide border border-white/[0.04]"
+                className="text-[11px] px-3 py-1 rounded-md bg-white/[0.03] text-white/60 tracking-wide border border-white/[0.04]"
               >
                 {tag}
               </span>

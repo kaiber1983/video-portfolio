@@ -14,7 +14,7 @@ export default async function AdminPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold">管理后台</h1>
-          <p className="text-sm text-[#a0a0a0] mt-1">
+          <p className="text-sm text-white/65 mt-1">
             共 {projects.length} 个作品
           </p>
         </div>
@@ -22,13 +22,13 @@ export default async function AdminPage() {
           <LogoutButton />
           <Link
             href="/admin/about"
-            className="px-4 py-2 rounded-lg bg-[#1e1e1e] text-[#a0a0a0] hover:text-white hover:bg-[#2a2a2a] transition-colors text-sm font-medium"
+            className="px-4 py-2 rounded-lg bg-[#1e1e1e] text-white/65 hover:text-white hover:bg-[#2a2a2a] transition-colors text-sm font-medium"
           >
             关于我
           </Link>
           <Link
             href="/admin/messages"
-            className="px-4 py-2 rounded-lg bg-[#1e1e1e] text-[#a0a0a0] hover:text-white hover:bg-[#2a2a2a] transition-colors text-sm font-medium"
+            className="px-4 py-2 rounded-lg bg-[#1e1e1e] text-white/65 hover:text-white hover:bg-[#2a2a2a] transition-colors text-sm font-medium"
           >
             留言
           </Link>
@@ -43,11 +43,11 @@ export default async function AdminPage() {
 
       {/* 作品列表 */}
       {projects.length === 0 ? (
-        <div className="text-center py-20 text-[#a0a0a0]">
+        <div className="text-center py-20 text-white/65">
           <p className="text-lg">还没有作品</p>
           <Link
             href="/admin/new"
-            className="text-accent hover:text-accent-hover text-sm mt-2 inline-block"
+            className="text-accent hover:text-white text-sm mt-2 inline-block"
           >
             创建第一个作品
           </Link>

@@ -177,7 +177,7 @@ export default function AdminProjectForm({
       )}
 
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a0a0a0]">
+        <label className="block text-sm font-medium mb-1.5 text-white/65">
           标题 *
         </label>
         <input
@@ -189,7 +189,7 @@ export default function AdminProjectForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a0a0a0]">
+        <label className="block text-sm font-medium mb-1.5 text-white/65">
           视频 URL *
         </label>
         <input
@@ -202,7 +202,7 @@ export default function AdminProjectForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a0a0a0]">
+        <label className="block text-sm font-medium mb-1.5 text-white/65">
           平台
         </label>
         <select
@@ -217,7 +217,7 @@ export default function AdminProjectForm({
 
       {/* 图片上传区域 */}
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a0a0a0]">
+        <label className="block text-sm font-medium mb-1.5 text-white/65">
           封面图片
         </label>
 
@@ -242,11 +242,11 @@ export default function AdminProjectForm({
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
-            className="px-4 py-2 rounded-lg bg-[#2a2a2a] text-sm text-[#a0a0a0] hover:text-white hover:bg-[#3a3a3a] transition-colors disabled:opacity-50"
+            className="px-4 py-2 rounded-lg bg-[#2a2a2a] text-sm text-white/65 hover:text-white hover:bg-[#3a3a3a] transition-colors disabled:opacity-50"
           >
             {uploading ? "上传中..." : "选择本地图片"}
           </button>
-          <span className="text-xs text-[#666]">支持 JPG/PNG/WebP/GIF，无尺寸限制</span>
+          <span className="text-xs text-white/40">支持 JPG/PNG/WebP/GIF，无尺寸限制</span>
         </div>
         <input
           ref={fileInputRef}
@@ -258,7 +258,7 @@ export default function AdminProjectForm({
 
         {/* 图片地址输入框 */}
         <div className="mt-3">
-          <label className="block text-xs mb-1 text-[#666]">
+          <label className="block text-xs mb-1 text-white/40">
             或输入图片 URL（上传后自动填充）
           </label>
           <input
@@ -275,7 +275,7 @@ export default function AdminProjectForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a0a0a0]">
+        <label className="block text-sm font-medium mb-1.5 text-white/65">
           描述
         </label>
         <textarea
@@ -287,7 +287,7 @@ export default function AdminProjectForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a0a0a0]">
+        <label className="block text-sm font-medium mb-1.5 text-white/65">
           标签（逗号分隔）
         </label>
         <input
@@ -305,7 +305,7 @@ export default function AdminProjectForm({
           defaultChecked={initialData?.featured}
           className="w-4 h-4 rounded border-[#2a2a2a] bg-[#1e1e1e] accent-accent"
         />
-        <span className="text-sm text-[#a0a0a0]">精选作品</span>
+        <span className="text-sm text-white/65">精选作品</span>
       </label>
 
       <div className="flex items-center gap-3 pt-2">
@@ -318,7 +318,7 @@ export default function AdminProjectForm({
         </button>
         <Link
           href="/admin"
-          className="px-6 py-2.5 rounded-lg bg-[#1e1e1e] text-[#a0a0a0] hover:text-white transition-colors"
+          className="px-6 py-2.5 rounded-lg bg-[#1e1e1e] text-white/65 hover:text-white transition-colors"
         >
           取消
         </Link>

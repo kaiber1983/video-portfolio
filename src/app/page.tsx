@@ -27,7 +27,7 @@ export default async function HomePage() {
           <FadeIn>
             <div className="flex items-center gap-4 mb-10">
               <span className="w-8 h-[1px] bg-accent-purple/30" />
-              <span className="text-[10px] tracking-[0.25em] uppercase text-accent-purple/70 font-display">
+              <span className="text-[10px] tracking-[0.25em] uppercase text-white/70 font-display">
                 全部作品
               </span>
               <span className="w-8 h-[1px] bg-accent-purple/30" />

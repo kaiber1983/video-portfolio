@@ -15,7 +15,7 @@ export default async function MessagesPage() {
     <div className="max-w-6xl mx-auto px-4 py-12">
       <Link
         href="/admin"
-        className="inline-flex items-center gap-1 text-sm text-[#a0a0a0] hover:text-[#f0f0f0] transition-colors mb-6"
+        className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-[#f0f0f0] transition-colors mb-6"
       >
         <svg
           width="16"
@@ -32,7 +32,7 @@ export default async function MessagesPage() {
 
       <div className="mb-8">
         <h1 className="text-2xl font-bold">留言管理</h1>
-        <p className="text-sm text-[#a0a0a0] mt-1">
+        <p className="text-sm text-white/65 mt-1">
           共 {messages.length} 条留言
           {unreadCount > 0 && (
             <span className="text-accent ml-1">
@@ -43,7 +43,7 @@ export default async function MessagesPage() {
       </div>
 
       {messages.length === 0 ? (
-        <div className="text-center py-20 text-[#a0a0a0]">
+        <div className="text-center py-20 text-white/65">
           <p className="text-lg">暂无留言</p>
         </div>
       ) : (
@@ -60,17 +60,17 @@ export default async function MessagesPage() {
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <span className="font-medium">{m.name}</span>
-                  <span className="text-[#a0a0a0] text-sm ml-3">
+                  <span className="text-white/65 text-sm ml-3">
                     {m.email}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   {!m.read && (
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/20 text-accent">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-accent/20 text-white">
                       未读
                     </span>
                   )}
-                  <span className="text-xs text-[#666]">
+                  <span className="text-xs text-white/40">
                     {new Date(m.createdAt).toLocaleDateString("zh-CN", {
                       year: "numeric",
                       month: "2-digit",
@@ -82,7 +82,7 @@ export default async function MessagesPage() {
                   <MarkReadButton id={m.id} read={m.read} />
                 </div>
               </div>
-              <p className="text-sm text-[#a0a0a0] leading-relaxed whitespace-pre-line">
+              <p className="text-sm text-white/65 leading-relaxed whitespace-pre-line">
                 {m.message}
               </p>
             </div>

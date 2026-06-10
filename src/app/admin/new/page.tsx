@@ -6,7 +6,7 @@ export default function NewProjectPage() {
     <div className="max-w-6xl mx-auto px-4 py-12">
       <Link
         href="/admin"
-        className="inline-flex items-center gap-1 text-sm text-[#a0a0a0] hover:text-[#f0f0f0] transition-colors mb-6"
+        className="inline-flex items-center gap-1 text-sm text-white/65 hover:text-[#f0f0f0] transition-colors mb-6"
       >
         <svg
           width="16"

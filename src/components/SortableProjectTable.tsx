@@ -123,8 +123,8 @@ export default function SortableProjectTable({ projects: initialProjects }: Prop
       <div className="bg-[#1e1e1e] rounded-xl border border-[#2a2a2a] overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-[#2a2a2a] text-[#a0a0a0]">
-              <th className="w-12 px-2 py-3 text-center text-xs text-[#555] font-normal">
+            <tr className="border-b border-[#2a2a2a] text-white/65">
+              <th className="w-12 px-2 py-3 text-center text-xs text-white/33 font-normal">
                 排序
               </th>
               <th className="text-left px-4 py-3 font-medium w-14">#</th>
@@ -167,28 +167,28 @@ export default function SortableProjectTable({ projects: initialProjects }: Prop
                     <circle cx="10" cy="13" r="1.5" fill="#666" />
                   </svg>
                 </td>
-                <td className="px-4 py-3 text-[#555] font-mono text-xs">{i + 1}</td>
+                <td className="px-4 py-3 text-white/33 font-mono text-xs">{i + 1}</td>
                 <td className="px-4 py-3 font-medium">{p.title}</td>
-                <td className="px-4 py-3 text-[#a0a0a0] hidden md:table-cell">
+                <td className="px-4 py-3 text-white/65 hidden md:table-cell">
                   {p.platform === "youtube" ? "YouTube" : "Bilibili"}
                 </td>
-                <td className="px-4 py-3 text-[#a0a0a0] hidden md:table-cell">
+                <td className="px-4 py-3 text-white/65 hidden md:table-cell">
                   {p.tags || "—"}
                 </td>
                 <td className="px-4 py-3">
                   {p.featured ? (
-                    <span className="text-xs px-1.5 py-0.5 rounded bg-accent/20 text-accent">
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-accent/20 text-white">
                       精选
                     </span>
                   ) : (
-                    <span className="text-[#666]">—</span>
+                    <span className="text-white/40">—</span>
                   )}
                 </td>
                 <td className="px-4 py-3 text-right">
                   <div className="flex items-center justify-end gap-2">
                     <Link
                       href={`/admin/edit/${p.id}`}
-                      className="px-3 py-1 rounded-md bg-[#2a2a2a] text-[#a0a0a0] hover:text-white transition-colors text-xs"
+                      className="px-3 py-1 rounded-md bg-[#2a2a2a] text-white/65 hover:text-white transition-colors text-xs"
                     >
                       编辑
                     </Link>
@@ -205,7 +205,7 @@ export default function SortableProjectTable({ projects: initialProjects }: Prop
         </table>
       </div>
 
-      <p className="text-xs text-[#555] mt-3 pl-1">
+      <p className="text-xs text-white/33 mt-3 pl-1">
         拖拽左侧 ⠿ 图标可调整作品排列顺序
       </p>
     </div>

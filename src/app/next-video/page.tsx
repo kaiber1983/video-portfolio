@@ -109,7 +109,7 @@ export default function NextVideoPage() {
           >
             <motion.span
               variants={childVariants}
-              className="inline-block text-xs tracking-[0.3em] uppercase text-accent-purple/80 font-body mb-8"
+              className="inline-block text-xs tracking-[0.3em] uppercase text-white/80 font-body mb-8"
             >
               SHOWCASE · 作品展示
             </motion.span>
@@ -123,7 +123,7 @@ export default function NextVideoPage() {
 
             <motion.p
               variants={childVariants}
-              className="text-sm md:text-base tracking-[0.2em] uppercase text-accent-purple/50 font-body mb-6"
+              className="text-sm md:text-base tracking-[0.2em] uppercase text-white/50 font-body mb-6"
             >
               下一部作品
             </motion.p>
@@ -142,7 +142,7 @@ export default function NextVideoPage() {
             style={{ opacity: heroOpacity }}
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           >
-            <span className="text-xs tracking-[0.2em] uppercase text-neutral-500 font-body">
+            <span className="text-xs tracking-[0.2em] uppercase text-white/50 font-body">
               Scroll
             </span>
             <div className="w-px h-12 bg-gradient-to-b from-neutral-500/50 to-transparent" />
@@ -160,7 +160,7 @@ export default function NextVideoPage() {
             >
               <motion.span
                 variants={childVariants}
-                className="inline-block text-xs tracking-[0.3em] uppercase text-accent-purple/60 font-body mb-4"
+                className="inline-block text-xs tracking-[0.3em] uppercase text-white/60 font-body mb-4"
               >
                 [01] ABOUT THE PROJECT
               </motion.span>
@@ -175,7 +175,7 @@ export default function NextVideoPage() {
 
               <motion.p
                 variants={childVariants}
-                className="text-base md:text-lg text-accent-purple/50 font-body tracking-wide mb-8"
+                className="text-base md:text-lg text-white/50 font-body tracking-wide mb-8"
               >
                 A Visual Narrative of Light and Emotion
               </motion.p>
@@ -206,7 +206,7 @@ export default function NextVideoPage() {
                   <div className="text-3xl md:text-4xl font-display font-bold text-accent-purple mb-2">
                     {stat.value}
                   </div>
-                  <div className="text-xs tracking-[0.15em] uppercase text-neutral-500 font-body">
+                  <div className="text-xs tracking-[0.15em] uppercase text-white/50 font-body">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -227,7 +227,7 @@ export default function NextVideoPage() {
             >
               <motion.span
                 variants={childVariants}
-                className="inline-block text-xs tracking-[0.3em] uppercase text-accent-purple/60 font-body mb-4"
+                className="inline-block text-xs tracking-[0.3em] uppercase text-white/60 font-body mb-4"
               >
                 [02] THE PROCESS
               </motion.span>
@@ -242,7 +242,7 @@ export default function NextVideoPage() {
 
               <motion.p
                 variants={childVariants}
-                className="text-base md:text-lg text-accent-purple/50 font-body tracking-wide mb-6"
+                className="text-base md:text-lg text-white/50 font-body tracking-wide mb-6"
               >
                 From Concept to Screen — Every Frame Matters
               </motion.p>
@@ -281,13 +281,13 @@ export default function NextVideoPage() {
                     strength={0.4}
                     className="block w-full p-8 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:border-accent-purple/30 hover:bg-white/[0.04] transition-colors duration-500 text-left cursor-default"
                   >
-                    <div className="text-5xl font-display font-bold text-accent-purple/30 mb-4">
+                    <div className="text-5xl font-display font-bold text-white/30 mb-4">
                       {step.number}
                     </div>
                     <h3 className="text-xl font-display font-semibold mb-3 text-white/90">
                       {step.title}
                     </h3>
-                    <p className="text-sm text-neutral-500 font-body leading-relaxed">
+                    <p className="text-sm text-white/50 font-body leading-relaxed">
                       {step.description}
                     </p>
                   </MagneticButton>
@@ -316,7 +316,7 @@ export default function NextVideoPage() {
             >
               <motion.span
                 variants={childVariants}
-                className="inline-block text-xs tracking-[0.3em] uppercase text-accent-purple/60 font-body mb-6"
+                className="inline-block text-xs tracking-[0.3em] uppercase text-white/60 font-body mb-6"
               >
                 [03] GET IN TOUCH · 联系我们
               </motion.span>
@@ -331,7 +331,7 @@ export default function NextVideoPage() {
 
               <motion.p
                 variants={childVariants}
-                className="text-lg text-accent-purple/50 font-body tracking-wide mb-10"
+                className="text-lg text-white/50 font-body tracking-wide mb-10"
               >
                 有项目想聊聊？
               </motion.p>
@@ -358,7 +358,7 @@ export default function NextVideoPage() {
               <div className="mt-8">
                 <Link
                   href="/"
-                  className="text-sm text-neutral-500 hover:text-accent-purple transition-colors duration-300 font-body underline underline-offset-4"
+                  className="text-sm text-white/50 hover:text-whitepurple transition-colors duration-300 font-body underline underline-offset-4"
                 >
                   View all projects
                 </Link>
@@ -370,7 +370,7 @@ export default function NextVideoPage() {
         {/* ═══ Footer ═══ */}
         <footer className="border-t border-white/[0.06] py-8 px-6">
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <span className="text-sm text-neutral-500 font-body">
+            <span className="text-sm text-white/50 font-body">
               &copy; {new Date().getFullYear()} Portfolio. All rights reserved.
             </span>
             <span className="text-xs text-neutral-600 font-body">

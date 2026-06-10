@@ -49,14 +49,14 @@ export default function ContactPage() {
           {/* 标题区 */}
           <div className="flex items-center gap-3 mb-4">
             <span className="w-6 h-[1px] bg-accent-blue/50" />
-            <span className="text-[10px] tracking-[0.25em] uppercase text-ink-dim font-display">
+            <span className="text-[10px] tracking-[0.25em] uppercase text-white font-display">
               Contact
             </span>
           </div>
           <h1 className="font-display text-4xl md:text-5xl gradient-text mb-3">
             联系我
           </h1>
-          <p className="text-ink-muted font-light mb-10 tracking-wide">
+          <p className="text-white font-light mb-10 tracking-wide">
             有合作意向或想聊聊？欢迎留言。
           </p>
         </FadeIn>
@@ -69,10 +69,10 @@ export default function ContactPage() {
                   <path d="M4 10L8 14L16 6" />
                 </svg>
               </div>
-              <p className="text-accent-indigo text-lg font-display mb-1">
+              <p className="text-white text-lg font-display mb-1">
                 留言已发送
               </p>
-              <p className="text-ink-muted text-sm font-light">
+              <p className="text-white text-sm font-light">
                 感谢你的留言，我会尽快回复。
               </p>
             </div>
@@ -87,41 +87,41 @@ export default function ContactPage() {
               )}
 
               <div>
-                <label className="block text-xs tracking-wider uppercase mb-2 text-ink-dim">
+                <label className="block text-xs tracking-wider uppercase mb-2 text-white">
                   姓名 *
                 </label>
                 <input
                   name="name"
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-ink-dim focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-white focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm"
                   placeholder="你的名字"
                   maxLength={100}
                 />
               </div>
 
               <div>
-                <label className="block text-xs tracking-wider uppercase mb-2 text-ink-dim">
+                <label className="block text-xs tracking-wider uppercase mb-2 text-white">
                   邮箱 *
                 </label>
                 <input
                   name="email"
                   type="email"
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-ink-dim focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-white focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm"
                   placeholder="your@email.com"
                   maxLength={200}
                 />
               </div>
 
               <div>
-                <label className="block text-xs tracking-wider uppercase mb-2 text-ink-dim">
+                <label className="block text-xs tracking-wider uppercase mb-2 text-white">
                   留言 *
                 </label>
                 <textarea
                   name="message"
                   required
                   rows={5}
-                  className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-ink-dim focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm resize-none"
+                  className="w-full px-4 py-3 rounded-lg bg-surface-card border border-white/[0.08] text-ink placeholder:text-white focus:border-accent-indigo/40 focus:outline-none transition-all duration-300 text-sm resize-none"
                   placeholder="你想说什么..."
                   maxLength={2000}
                 />

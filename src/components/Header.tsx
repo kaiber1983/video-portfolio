@@ -40,7 +40,7 @@ export default function Header() {
           <span className="text-lg font-display tracking-[0.15em] gradient-text">
             STUDIO
           </span>
-          <span className="block text-[9px] tracking-[0.3em] text-ink-dim uppercase text-right -mt-0.5">
+          <span className="block text-[9px] tracking-[0.3em] text-white uppercase text-right -mt-0.5">
             Portfolio
           </span>
           <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-accent-indigo transition-all duration-500 group-hover:w-full" />
@@ -56,8 +56,8 @@ export default function Header() {
                 href={href}
                 className={`relative px-3.5 py-1.5 rounded-lg text-sm tracking-wider transition-all duration-300 ${
                   isActive
-                    ? "text-accent-indigo"
-                    : "text-ink-muted hover:text-ink"
+                    ? "text-white"
+                    : "text-white hover:text-white"
                 }`}
               >
                 {label}

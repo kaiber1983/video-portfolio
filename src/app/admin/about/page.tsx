@@ -11,7 +11,7 @@ export default async function AdminAboutPage() {
     <div className="max-w-6xl mx-auto px-4 py-12">
       <Link
         href="/admin"
-        className="inline-flex items-center gap-1 text-sm text-[#a3a3a3] hover:text-white transition-colors mb-6"
+        className="inline-flex items-center gap-1 text-sm text-white/64 hover:text-white transition-colors mb-6"
       >
         <svg
           width="16"

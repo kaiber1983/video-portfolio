@@ -29,8 +29,8 @@ export default function TagFilter({ tags }: TagFilterProps) {
           onClick={() => handleClick(tag)}
           className={`px-4 py-1.5 rounded-full text-xs tracking-[0.08em] uppercase transition-all duration-400 ${
             activeTag === tag
-              ? "bg-accent-dim text-accent-indigo border border-accent-indigo/30 shadow-[0_0_20px_-5px_rgba(99,102,241,0.15)]"
-              : "bg-transparent text-ink-muted border border-white/[0.08] hover:text-ink hover:border-white/[0.15]"
+              ? "bg-accent-dim text-white border border-accent-indigo/30 shadow-[0_0_20px_-5px_rgba(99,102,241,0.15)]"
+              : "bg-transparent text-white border border-white/[0.08] hover:text-white hover:border-white/[0.15]"
           }`}
         >
           {tag}

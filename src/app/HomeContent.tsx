@@ -41,10 +41,10 @@ export default function HomeContent({ projects, error }: Props) {
       <FadeIn delay={100}>
         {error ? (
           <div className="text-center py-20">
-            <p className="text-lg text-ink-muted mb-2">加载失败</p>
+            <p className="text-lg text-white mb-2">加载失败</p>
             <button
               onClick={() => window.location.reload()}
-              className="text-sm text-accent-blue hover:text-accent-indigo transition-colors"
+              className="text-sm text-white hover:text-white transition-colors"
             >
               点击重试
             </button>

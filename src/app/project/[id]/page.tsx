@@ -54,18 +54,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <a
               key={tag}
               href={`/?tag=${encodeURIComponent(tag)}`}
-              className="text-[10px] px-3 py-1 rounded-full border border-white/[0.08] text-ink-dim hover:text-accent-indigo hover:border-accent-indigo/30 transition-all duration-300 tracking-wider uppercase"
+              className="text-[10px] px-3 py-1 rounded-full border border-white/[0.08] text-white hover:text-white hover:border-accent-indigo/30 transition-all duration-300 tracking-wider uppercase"
             >
               {tag.trim()}
             </a>
           ))}
         </div>
 
-        <p className="text-ink-muted leading-relaxed whitespace-pre-line font-light">
+        <p className="text-white leading-relaxed whitespace-pre-line font-light">
           {project.description}
         </p>
 
-        <div className="text-xs text-ink-dim pt-6 gradient-divider">
+        <div className="text-xs text-white pt-6 gradient-divider">
           <div className="flex items-center gap-4 pt-4">
             <span className="flex items-center gap-1.5">
               <span className="w-1 h-1 rounded-full bg-accent-blue/50" />

@@ -25,8 +25,8 @@ export default function MarkReadButton({
       onClick={toggleRead}
       className={`text-xs px-2 py-1 rounded-md transition-colors ${
         read
-          ? "bg-[#2a2a2a] text-[#a0a0a0] hover:text-white"
-          : "bg-accent/20 text-accent hover:bg-accent/30"
+          ? "bg-[#2a2a2a] text-white/65 hover:text-white"
+          : "bg-accent/20 text-white hover:bg-accent/30"
       }`}
     >
       {read ? "标为未读" : "标为已读"}

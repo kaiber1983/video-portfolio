@@ -87,7 +87,7 @@ export default function AboutForm({
       )}
 
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a3a3a3]">
+        <label className="block text-sm font-medium mb-1.5 text-white/64">
           姓名
         </label>
         <input
@@ -99,7 +99,7 @@ export default function AboutForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a3a3a3]">
+        <label className="block text-sm font-medium mb-1.5 text-white/64">
           头像 URL
         </label>
         <input
@@ -111,7 +111,7 @@ export default function AboutForm({
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-1.5 text-[#a3a3a3]">
+        <label className="block text-sm font-medium mb-1.5 text-white/64">
           个人简介
         </label>
         <textarea
@@ -123,11 +123,11 @@ export default function AboutForm({
       </div>
 
       <div>
-        <p className="text-sm font-medium mb-3 text-[#a3a3a3]">社交链接</p>
+        <p className="text-sm font-medium mb-3 text-white/64">社交链接</p>
         <div className="space-y-3">
           {Object.entries(defaultSocials).map(([platform, url]) => (
             <div key={platform}>
-              <label className="block text-xs mb-1 text-[#666]">
+              <label className="block text-xs mb-1 text-white/40">
                 {platform}
               </label>
               <input

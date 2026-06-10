@@ -33,7 +33,7 @@ export default function DeleteButton({
       <div className="flex gap-1">
         <button
           onClick={() => setConfirming(false)}
-          className="px-2 py-1 rounded-md text-xs text-[#a0a0a0] border border-[#2a2a2a] hover:text-white transition-colors"
+          className="px-2 py-1 rounded-md text-xs text-white/65 border border-[#2a2a2a] hover:text-white transition-colors"
         >
           取消
         </button>

@@ -38,7 +38,7 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-[60vh] px-4">
       <div className="w-full max-w-sm">
         <h1 className="text-2xl font-bold mb-2 text-center">管理后台</h1>
-        <p className="text-[#a0a0a0] text-sm text-center mb-8">
+        <p className="text-white/65 text-sm text-center mb-8">
           请输入密码以继续
         </p>
 
