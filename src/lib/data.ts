@@ -65,12 +65,14 @@ function hasGithubToken(): boolean {
 
 // 从 GitHub 读取 JSON 文件
 async function readJsonFromGithub<T>(filename: string): Promise<T[]> {
-  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data/${filename}?ref=${BRANCH}`;
+  // 加时间戳绕过 GitHub CDN 缓存，确保读到最新提交
+  const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data/${filename}?ref=${BRANCH}&t=${Date.now()}`;
   const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
       Accept: "application/vnd.github.v3+json",
     },
+    cache: "no-store",
   });
 
   if (!res.ok) {
