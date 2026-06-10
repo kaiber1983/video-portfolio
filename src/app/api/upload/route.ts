@@ -31,12 +31,39 @@ export async function POST(request: Request) {
     const ext = extMap[mime] || "png";
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
+    // Vercel 生产环境通过 GitHub API 上传图片
+    if (process.env.GITHUB_TOKEN) {
+      const content = buffer.toString("base64");
+      const url = `https://api.github.com/repos/kaiber1983/video-portfolio/contents/public/images/${filename}`;
+
+      const res = await fetch(url, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          Accept: "application/vnd.github.v3+json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: `上传封面图片: ${filename}`,
+          content,
+          branch: "master",
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(`GitHub 上传失败: ${res.status} ${err}`);
+      }
+
+      return NextResponse.json({ url: `/images/${filename}` });
+    }
+
+    // 本地开发写入 public/images/
     const dir = path.join(process.cwd(), "public", "images");
     await mkdir(dir, { recursive: true });
-
     await writeFile(path.join(dir, filename), buffer);
-
     return NextResponse.json({ url: `/images/${filename}` });
+
   } catch (error) {
     console.error("上传失败:", error);
     return NextResponse.json({ error: "上传失败" }, { status: 500 });
